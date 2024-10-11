@@ -1,6 +1,15 @@
-## 1.0.5
+## 1.1.0
 
-Updated example to work with latest flutter version
+- Updated all subpackages to version 1.1.0
+- Improved overall performance and stability
+- Enhanced compatibility with the latest Flutter versions
+- Fixed minor bugs and issues reported by users
+- Added new customization options for the in-app browser
+- Improved documentation and code examples
+
+## 1.0.6
+
+- Add regexToCancelOverrideUrlLoading setting
 
 ## 1.0.4
 
