@@ -6,17 +6,19 @@ import 'package:zikzak_inappwebview/zikzak_inappwebview.dart';
 
 import 'package:zikzak_inappwebview_example/chrome_safari_browser_example.screen.dart';
 import 'package:zikzak_inappwebview_example/headless_in_app_webview.screen.dart';
-import 'package:zikzak_inappwebview_example/in_app_webiew_example.screen.dart';
 import 'package:zikzak_inappwebview_example/in_app_browser_example.screen.dart';
 import 'package:zikzak_inappwebview_example/web_authentication_session_example.screen.dart';
 import 'package:pointer_interceptor/pointer_interceptor.dart';
+
+import 'in_app_webview_example.screen.dart';
 
 // import 'package:path_provider/path_provider.dart';
 // import 'package:permission_handler/permission_handler.dart';
 
 final localhostServer = InAppLocalhostServer(documentRoot: 'assets');
 WebViewEnvironment? webViewEnvironment;
-
+final String urlToLoad =
+    'https://www.walmart.com/search?q=samsung+50+inch+class+4k+crystal+uhd+du8000+series';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // await Permission.camera.request();
@@ -197,7 +199,7 @@ class _MyAppState extends State<MyApp> {
             HeadlessInAppWebViewExampleScreen(),
       });
     }
-    return MaterialApp(initialRoute: '/', routes: {
+    return MaterialApp(initialRoute: '/HeadlessInAppWebView', routes: {
       '/': (context) => InAppWebViewExampleScreen(),
       '/InAppBrowser': (context) => InAppBrowserExampleScreen(),
       '/ChromeSafariBrowser': (context) => ChromeSafariBrowserExampleScreen(),

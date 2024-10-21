@@ -14,13 +14,14 @@ class _HeadlessInAppWebViewExampleScreenState
     extends State<HeadlessInAppWebViewExampleScreen> {
   HeadlessInAppWebView? headlessWebView;
   String url = "";
+  InAppWebViewController? _webViewController;
 
   @override
   void initState() {
     super.initState();
 
     var url = !kIsWeb
-        ? WebUri("https://flutter.dev")
+        ? WebUri(urlToLoad)
         : WebUri("http://localhost:${Uri.base.port}/page.html");
 
     headlessWebView = HeadlessInAppWebView(
@@ -30,6 +31,8 @@ class _HeadlessInAppWebViewExampleScreenState
         isInspectable: kDebugMode,
       ),
       onWebViewCreated: (controller) {
+        _webViewController = controller;
+
         print('HeadlessInAppWebView created!');
       },
       onConsoleMessage: (controller, consoleMessage) {
@@ -41,6 +44,8 @@ class _HeadlessInAppWebViewExampleScreenState
         });
       },
       onLoadStop: (controller, url) async {
+        final content = await _getPageContent();
+        print(content.contains('Samsung'));
         setState(() {
           this.url = url.toString();
         });
@@ -51,6 +56,20 @@ class _HeadlessInAppWebViewExampleScreenState
         });
       },
     );
+  }
+
+  InAppWebViewController get webViewController {
+    if (_webViewController == null) {
+      throw StateError('WebViewController is not initialized');
+    }
+    return _webViewController!;
+  }
+
+  Future<String> _getPageContent() async {
+    final result = await webViewController.evaluateJavascript(
+      source: 'document.documentElement.outerHTML',
+    );
+    return result?.toString() ?? '';
   }
 
   @override

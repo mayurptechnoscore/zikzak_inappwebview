@@ -1,0 +1,45 @@
+PODS:
+  - Flutter (1.0.0)
+  - OrderedSet (5.0.0)
+  - pointer_interceptor_ios (0.0.1):
+    - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
+  - zikzak_inappwebview_ios (1.1.0):
+    - Flutter
+    - OrderedSet (~> 5.0)
+    - zikzak_inappwebview_ios/Core (= 1.1.0)
+  - zikzak_inappwebview_ios/Core (1.1.0):
+    - Flutter
+    - OrderedSet (~> 5.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - pointer_interceptor_ios (from `.symlinks/plugins/pointer_interceptor_ios/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
+  - zikzak_inappwebview_ios (from `.symlinks/plugins/zikzak_inappwebview_ios/ios`)
+
+SPEC REPOS:
+  trunk:
+    - OrderedSet
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  pointer_interceptor_ios:
+    :path: ".symlinks/plugins/pointer_interceptor_ios/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
+  zikzak_inappwebview_ios:
+    :path: ".symlinks/plugins/zikzak_inappwebview_ios/ios"
+
+SPEC CHECKSUMS:
+  Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
+  OrderedSet: aaeb196f7fef5a9edf55d89760da9176ad40b93c
+  pointer_interceptor_ios: 508241697ff0947f853c061945a8b822463947c1
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
+  zikzak_inappwebview_ios: b08b3f2005e61a4daf478dbe5dbc67dee162fc50
+
+PODFILE CHECKSUM: 819463e6a0290f5a72f145ba7cde16e8b6ef0796
+
+COCOAPODS: 1.15.2
