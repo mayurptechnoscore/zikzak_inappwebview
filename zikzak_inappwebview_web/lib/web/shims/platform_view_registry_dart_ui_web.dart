@@ -4,8 +4,12 @@ import 'dart:ui_web' as ui_web;
 
 class platformViewRegistry {
   static bool registerViewFactory(
-      String viewTypeId, html.Element Function(int viewId) viewFactory) {
-    return ui_web.platformViewRegistry
-        .registerViewFactory(viewTypeId, viewFactory);
+    String viewTypeId,
+    html.Element Function(int viewId) viewFactory,
+  ) {
+    return ui_web.platformViewRegistry.registerViewFactory(
+      viewTypeId,
+      viewFactory,
+    );
   }
 }

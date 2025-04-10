@@ -11,20 +11,23 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class IOSWebMessageListenerCreationParams
     extends PlatformWebMessageListenerCreationParams {
   /// Creates a new [IOSWebMessageListenerCreationParams] instance.
-  const IOSWebMessageListenerCreationParams(
-      {required this.allowedOriginRules,
-      required super.jsObjectName,
-      super.onPostMessage});
+  const IOSWebMessageListenerCreationParams({
+    required this.allowedOriginRules,
+    required super.jsObjectName,
+    super.onPostMessage,
+  });
 
   /// Creates a [IOSWebMessageListenerCreationParams] instance based on [PlatformWebMessageListenerCreationParams].
   factory IOSWebMessageListenerCreationParams.fromPlatformWebMessageListenerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformWebMessageListenerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformWebMessageListenerCreationParams params,
+  ) {
     return IOSWebMessageListenerCreationParams(
-        allowedOriginRules: params.allowedOriginRules ?? Set.from(["*"]),
-        jsObjectName: params.jsObjectName,
-        onPostMessage: params.onPostMessage);
+      allowedOriginRules: params.allowedOriginRules ?? Set.from(["*"]),
+      jsObjectName: params.jsObjectName,
+      onPostMessage: params.onPostMessage,
+    );
   }
 
   @override
@@ -45,12 +48,17 @@ class IOSWebMessageListener extends PlatformWebMessageListener
           params is IOSWebMessageListenerCreationParams
               ? params
               : IOSWebMessageListenerCreationParams
-                  .fromPlatformWebMessageListenerCreationParams(params),
+                  .fromPlatformWebMessageListenerCreationParams(
+                  params,
+                ),
         ) {
-    assert(!this._iosParams.allowedOriginRules.contains(""),
-        "allowedOriginRules cannot contain empty strings");
+    assert(
+      !this._iosParams.allowedOriginRules.contains(""),
+      "allowedOriginRules cannot contain empty strings",
+    );
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_web_message_listener_${_id}_${params.jsObjectName}');
+      'wtf.zikzak/zikzak_inappwebview_web_message_listener_${_id}_${params.jsObjectName}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }
@@ -68,13 +76,16 @@ class IOSWebMessageListener extends PlatformWebMessageListener
       case "onPostMessage":
         if (_replyProxy == null) {
           _replyProxy = IOSJavaScriptReplyProxy(
-              PlatformJavaScriptReplyProxyCreationParams(
-                  webMessageListener: this));
+            PlatformJavaScriptReplyProxyCreationParams(
+              webMessageListener: this,
+            ),
+          );
         }
         if (onPostMessage != null) {
           WebMessage? message = call.arguments["message"] != null
               ? WebMessage.fromMap(
-                  call.arguments["message"].cast<String, dynamic>())
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
               : null;
           WebUri? sourceOrigin = call.arguments["sourceOrigin"] != null
               ? WebUri(call.arguments["sourceOrigin"])
@@ -123,16 +134,19 @@ class IOSWebMessageListener extends PlatformWebMessageListener
 class IOSJavaScriptReplyProxyCreationParams
     extends PlatformJavaScriptReplyProxyCreationParams {
   /// Creates a new [IOSJavaScriptReplyProxyCreationParams] instance.
-  const IOSJavaScriptReplyProxyCreationParams(
-      {required super.webMessageListener});
+  const IOSJavaScriptReplyProxyCreationParams({
+    required super.webMessageListener,
+  });
 
   /// Creates a [IOSJavaScriptReplyProxyCreationParams] instance based on [PlatformJavaScriptReplyProxyCreationParams].
   factory IOSJavaScriptReplyProxyCreationParams.fromPlatformJavaScriptReplyProxyCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformJavaScriptReplyProxyCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformJavaScriptReplyProxyCreationParams params,
+  ) {
     return IOSJavaScriptReplyProxyCreationParams(
-        webMessageListener: params.webMessageListener);
+      webMessageListener: params.webMessageListener,
+    );
   }
 }
 
@@ -144,7 +158,9 @@ class IOSJavaScriptReplyProxy extends PlatformJavaScriptReplyProxy {
           params is IOSJavaScriptReplyProxyCreationParams
               ? params
               : IOSJavaScriptReplyProxyCreationParams
-                  .fromPlatformJavaScriptReplyProxyCreationParams(params),
+                  .fromPlatformJavaScriptReplyProxyCreationParams(
+                  params,
+                ),
         );
 
   IOSWebMessageListener get _iosWebMessageListener =>

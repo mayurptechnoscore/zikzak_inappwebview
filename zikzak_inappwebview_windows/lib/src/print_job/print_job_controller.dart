@@ -11,16 +11,21 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class WindowsPrintJobControllerCreationParams
     extends PlatformPrintJobControllerCreationParams {
   /// Creates a new [WindowsPrintJobControllerCreationParams] instance.
-  const WindowsPrintJobControllerCreationParams(
-      {required super.id, super.onComplete});
+  const WindowsPrintJobControllerCreationParams({
+    required super.id,
+    super.onComplete,
+  });
 
   /// Creates a [WindowsPrintJobControllerCreationParams] instance based on [PlatformPrintJobControllerCreationParams].
   factory WindowsPrintJobControllerCreationParams.fromPlatformPrintJobControllerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformPrintJobControllerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformPrintJobControllerCreationParams params,
+  ) {
     return WindowsPrintJobControllerCreationParams(
-        id: params.id, onComplete: params.onComplete);
+      id: params.id,
+      onComplete: params.onComplete,
+    );
   }
 }
 
@@ -33,11 +38,14 @@ class WindowsPrintJobController extends PlatformPrintJobController
           params is WindowsPrintJobControllerCreationParams
               ? params
               : WindowsPrintJobControllerCreationParams
-                  .fromPlatformPrintJobControllerCreationParams(params),
+                  .fromPlatformPrintJobControllerCreationParams(
+                  params,
+                ),
         ) {
     onComplete = params.onComplete;
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}');
+      'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }

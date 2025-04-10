@@ -37,7 +37,8 @@ class PlatformUtil extends ChannelController {
 
   String getWebCookieExpirationDate(int timestamp) {
     var bridgeJsObject = js.JsObject.fromBrowserObject(
-        js.context[WebPlatformManager.BRIDGE_JS_OBJECT_NAME]);
+      js.context[WebPlatformManager.BRIDGE_JS_OBJECT_NAME],
+    );
     return bridgeJsObject.callMethod("getCookieExpirationDate", [timestamp]);
   }
 

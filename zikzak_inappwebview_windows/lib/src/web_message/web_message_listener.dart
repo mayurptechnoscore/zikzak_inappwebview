@@ -11,20 +11,23 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class WindowsWebMessageListenerCreationParams
     extends PlatformWebMessageListenerCreationParams {
   /// Creates a new [WindowsWebMessageListenerCreationParams] instance.
-  const WindowsWebMessageListenerCreationParams(
-      {required this.allowedOriginRules,
-      required super.jsObjectName,
-      super.onPostMessage});
+  const WindowsWebMessageListenerCreationParams({
+    required this.allowedOriginRules,
+    required super.jsObjectName,
+    super.onPostMessage,
+  });
 
   /// Creates a [WindowsWebMessageListenerCreationParams] instance based on [PlatformWebMessageListenerCreationParams].
   factory WindowsWebMessageListenerCreationParams.fromPlatformWebMessageListenerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformWebMessageListenerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformWebMessageListenerCreationParams params,
+  ) {
     return WindowsWebMessageListenerCreationParams(
-        allowedOriginRules: params.allowedOriginRules ?? Set.from(["*"]),
-        jsObjectName: params.jsObjectName,
-        onPostMessage: params.onPostMessage);
+      allowedOriginRules: params.allowedOriginRules ?? Set.from(["*"]),
+      jsObjectName: params.jsObjectName,
+      onPostMessage: params.onPostMessage,
+    );
   }
 
   @override
@@ -45,12 +48,17 @@ class WindowsWebMessageListener extends PlatformWebMessageListener
           params is WindowsWebMessageListenerCreationParams
               ? params
               : WindowsWebMessageListenerCreationParams
-                  .fromPlatformWebMessageListenerCreationParams(params),
+                  .fromPlatformWebMessageListenerCreationParams(
+                  params,
+                ),
         ) {
-    assert(!this._macosParams.allowedOriginRules.contains(""),
-        "allowedOriginRules cannot contain empty strings");
+    assert(
+      !this._macosParams.allowedOriginRules.contains(""),
+      "allowedOriginRules cannot contain empty strings",
+    );
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_web_message_listener_${_id}_${params.jsObjectName}');
+      'wtf.zikzak/zikzak_inappwebview_web_message_listener_${_id}_${params.jsObjectName}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }
@@ -68,13 +76,16 @@ class WindowsWebMessageListener extends PlatformWebMessageListener
       case "onPostMessage":
         if (_replyProxy == null) {
           _replyProxy = MacOSJavaScriptReplyProxy(
-              PlatformJavaScriptReplyProxyCreationParams(
-                  webMessageListener: this));
+            PlatformJavaScriptReplyProxyCreationParams(
+              webMessageListener: this,
+            ),
+          );
         }
         if (onPostMessage != null) {
           WebMessage? message = call.arguments["message"] != null
               ? WebMessage.fromMap(
-                  call.arguments["message"].cast<String, dynamic>())
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
               : null;
           WebUri? sourceOrigin = call.arguments["sourceOrigin"] != null
               ? WebUri(call.arguments["sourceOrigin"])
@@ -123,16 +134,19 @@ class WindowsWebMessageListener extends PlatformWebMessageListener
 class MacOSJavaScriptReplyProxyCreationParams
     extends PlatformJavaScriptReplyProxyCreationParams {
   /// Creates a new [MacOSJavaScriptReplyProxyCreationParams] instance.
-  const MacOSJavaScriptReplyProxyCreationParams(
-      {required super.webMessageListener});
+  const MacOSJavaScriptReplyProxyCreationParams({
+    required super.webMessageListener,
+  });
 
   /// Creates a [MacOSJavaScriptReplyProxyCreationParams] instance based on [PlatformJavaScriptReplyProxyCreationParams].
   factory MacOSJavaScriptReplyProxyCreationParams.fromPlatformJavaScriptReplyProxyCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformJavaScriptReplyProxyCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformJavaScriptReplyProxyCreationParams params,
+  ) {
     return MacOSJavaScriptReplyProxyCreationParams(
-        webMessageListener: params.webMessageListener);
+      webMessageListener: params.webMessageListener,
+    );
   }
 }
 
@@ -144,7 +158,9 @@ class MacOSJavaScriptReplyProxy extends PlatformJavaScriptReplyProxy {
           params is MacOSJavaScriptReplyProxyCreationParams
               ? params
               : MacOSJavaScriptReplyProxyCreationParams
-                  .fromPlatformJavaScriptReplyProxyCreationParams(params),
+                  .fromPlatformJavaScriptReplyProxyCreationParams(
+                  params,
+                ),
         );
 
   WindowsWebMessageListener get _macosWebMessageListener =>

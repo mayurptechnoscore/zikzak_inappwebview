@@ -19,9 +19,10 @@ class AndroidChromeSafariBrowserCreationParams
 
   /// Creates a [AndroidChromeSafariBrowserCreationParams] instance based on [PlatformChromeSafariBrowserCreationParams].
   factory AndroidChromeSafariBrowserCreationParams.fromPlatformChromeSafariBrowserCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformChromeSafariBrowserCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformChromeSafariBrowserCreationParams params,
+  ) {
     return AndroidChromeSafariBrowserCreationParams();
   }
 }
@@ -34,12 +35,13 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
 
   /// Constructs a [AndroidChromeSafariBrowser].
   AndroidChromeSafariBrowser(PlatformChromeSafariBrowserCreationParams params)
-      : super.implementation(
-          params is AndroidChromeSafariBrowserCreationParams
-              ? params
-              : AndroidChromeSafariBrowserCreationParams
-                  .fromPlatformChromeSafariBrowserCreationParams(params),
-        );
+    : super.implementation(
+        params is AndroidChromeSafariBrowserCreationParams
+            ? params
+            : AndroidChromeSafariBrowserCreationParams.fromPlatformChromeSafariBrowserCreationParams(
+              params,
+            ),
+      );
 
   static final AndroidChromeSafariBrowser _staticValue =
       AndroidChromeSafariBrowser(AndroidChromeSafariBrowserCreationParams());
@@ -53,8 +55,9 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   Map<int, ChromeSafariBrowserMenuItem> _menuItems = new HashMap();
   ChromeSafariBrowserSecondaryToolbar? _secondaryToolbar;
   bool _isOpened = false;
-  static const MethodChannel _staticChannel =
-      const MethodChannel('wtf.zikzak/flutter_chromesafaribrowser');
+  static const MethodChannel _staticChannel = const MethodChannel(
+    'wtf.zikzak/flutter_chromesafaribrowser',
+  );
 
   _init() {
     channel = MethodChannel('wtf.zikzak/flutter_chromesafaribrowser_$id');
@@ -64,11 +67,12 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
 
   _debugLog(String method, dynamic args) {
     debugLog(
-        className: this.runtimeType.toString(),
-        id: id,
-        debugLoggingSettings: PlatformChromeSafariBrowser.debugLoggingSettings,
-        method: method,
-        args: args);
+      className: this.runtimeType.toString(),
+      id: id,
+      debugLoggingSettings: PlatformChromeSafariBrowser.debugLoggingSettings,
+      method: method,
+      args: args,
+    );
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
@@ -87,18 +91,24 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
         break;
       case "onNavigationEvent":
         final navigationEvent = CustomTabsNavigationEventType.fromNativeValue(
-            call.arguments["navigationEvent"]);
+          call.arguments["navigationEvent"],
+        );
         eventHandler?.onNavigationEvent(navigationEvent);
         break;
       case "onRelationshipValidationResult":
-        final relation =
-            CustomTabsRelationType.fromNativeValue(call.arguments["relation"]);
-        final requestedOrigin = call.arguments["requestedOrigin"] != null
-            ? WebUri(call.arguments["requestedOrigin"])
-            : null;
+        final relation = CustomTabsRelationType.fromNativeValue(
+          call.arguments["relation"],
+        );
+        final requestedOrigin =
+            call.arguments["requestedOrigin"] != null
+                ? WebUri(call.arguments["requestedOrigin"])
+                : null;
         final bool result = call.arguments["result"];
         eventHandler?.onRelationshipValidationResult(
-            relation, requestedOrigin, result);
+          relation,
+          requestedOrigin,
+          result,
+        );
         break;
       case "onClosed":
         _isOpened = false;
@@ -129,9 +139,10 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
       case "onSecondaryItemActionPerform":
         final clickableIDs = this._secondaryToolbar?.clickableIDs;
         if (clickableIDs != null) {
-          WebUri? url = call.arguments["url"] != null
-              ? WebUri(call.arguments["url"])
-              : null;
+          WebUri? url =
+              call.arguments["url"] != null
+                  ? WebUri(call.arguments["url"])
+                  : null;
           String name = call.arguments["name"];
           for (final clickable in clickableIDs) {
             var clickableFullname = clickable.id.name;
@@ -178,22 +189,25 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   }
 
   @override
-  Future<void> open(
-      {WebUri? url,
-      Map<String, String>? headers,
-      List<WebUri>? otherLikelyURLs,
-      WebUri? referrer,
-      @Deprecated('Use settings instead')
-      // ignore: deprecated_member_use_from_same_package
-      ChromeSafariBrowserClassOptions? options,
-      ChromeSafariBrowserSettings? settings}) async {
+  Future<void> open({
+    WebUri? url,
+    Map<String, String>? headers,
+    List<WebUri>? otherLikelyURLs,
+    WebUri? referrer,
+    @Deprecated('Use settings instead')
+    // ignore: deprecated_member_use_from_same_package
+    ChromeSafariBrowserClassOptions? options,
+    ChromeSafariBrowserSettings? settings,
+  }) async {
     assert(!_isOpened, 'The browser is already opened.');
     _isOpened = true;
 
     if (Util.isIOS) {
       assert(url != null, 'The specified URL must not be null on iOS.');
-      assert(['http', 'https'].contains(url!.scheme),
-          'The specified URL has an unsupported scheme. Only HTTP and HTTPS URLs are supported on iOS.');
+      assert(
+        ['http', 'https'].contains(url!.scheme),
+        'The specified URL has an unsupported scheme. Only HTTP and HTTPS URLs are supported on iOS.',
+      );
     }
     if (url != null) {
       assert(url.toString().isNotEmpty, 'The specified URL must not be empty.');
@@ -206,7 +220,8 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
       menuItemList.add(value.toMap());
     });
 
-    var initialSettings = settings?.toMap() ??
+    var initialSettings =
+        settings?.toMap() ??
         options?.toMap() ??
         ChromeSafariBrowserSettings().toMap();
 
@@ -214,8 +229,10 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
     args.putIfAbsent('id', () => id);
     args.putIfAbsent('url', () => url?.toString());
     args.putIfAbsent('headers', () => headers);
-    args.putIfAbsent('otherLikelyURLs',
-        () => otherLikelyURLs?.map((e) => e.toString()).toList());
+    args.putIfAbsent(
+      'otherLikelyURLs',
+      () => otherLikelyURLs?.map((e) => e.toString()).toList(),
+    );
     args.putIfAbsent('referrer', () => referrer?.toString());
     args.putIfAbsent('settings', () => initialSettings);
     args.putIfAbsent('actionButton', () => _actionButton?.toMap());
@@ -234,26 +251,33 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('url', () => url.toString());
     args.putIfAbsent('headers', () => headers);
-    args.putIfAbsent('otherLikelyURLs',
-        () => otherLikelyURLs?.map((e) => e.toString()).toList());
+    args.putIfAbsent(
+      'otherLikelyURLs',
+      () => otherLikelyURLs?.map((e) => e.toString()).toList(),
+    );
     args.putIfAbsent('referrer', () => referrer?.toString());
     await channel?.invokeMethod("launchUrl", args);
   }
 
   @override
-  Future<bool> mayLaunchUrl(
-      {WebUri? url, List<WebUri>? otherLikelyURLs}) async {
+  Future<bool> mayLaunchUrl({
+    WebUri? url,
+    List<WebUri>? otherLikelyURLs,
+  }) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('url', () => url?.toString());
-    args.putIfAbsent('otherLikelyURLs',
-        () => otherLikelyURLs?.map((e) => e.toString()).toList());
+    args.putIfAbsent(
+      'otherLikelyURLs',
+      () => otherLikelyURLs?.map((e) => e.toString()).toList(),
+    );
     return await channel?.invokeMethod<bool>("mayLaunchUrl", args) ?? false;
   }
 
   @override
-  Future<bool> validateRelationship(
-      {required CustomTabsRelationType relation,
-      required WebUri origin}) async {
+  Future<bool> validateRelationship({
+    required CustomTabsRelationType relation,
+    required WebUri origin,
+  }) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('relation', () => relation.toNativeValue());
     args.putIfAbsent('origin', () => origin.toString());
@@ -273,8 +297,10 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   }
 
   @override
-  Future<void> updateActionButton(
-      {required Uint8List icon, required String description}) async {
+  Future<void> updateActionButton({
+    required Uint8List icon,
+    required String description,
+  }) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('icon', () => icon);
     args.putIfAbsent('description', () => description);
@@ -285,13 +311,15 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
 
   @override
   void setSecondaryToolbar(
-      ChromeSafariBrowserSecondaryToolbar secondaryToolbar) {
+    ChromeSafariBrowserSecondaryToolbar secondaryToolbar,
+  ) {
     this._secondaryToolbar = secondaryToolbar;
   }
 
   @override
   Future<void> updateSecondaryToolbar(
-      ChromeSafariBrowserSecondaryToolbar secondaryToolbar) async {
+    ChromeSafariBrowserSecondaryToolbar secondaryToolbar,
+  ) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('secondaryToolbar', () => secondaryToolbar.toMap());
     await channel?.invokeMethod("updateSecondaryToolbar", args);
@@ -311,13 +339,17 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   }
 
   @override
-  Future<bool> requestPostMessageChannel(
-      {required WebUri sourceOrigin, WebUri? targetOrigin}) async {
+  Future<bool> requestPostMessageChannel({
+    required WebUri sourceOrigin,
+    WebUri? targetOrigin,
+  }) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent("sourceOrigin", () => sourceOrigin.toString());
     args.putIfAbsent("targetOrigin", () => targetOrigin.toString());
     return await channel?.invokeMethod<bool>(
-            "requestPostMessageChannel", args) ??
+          "requestPostMessageChannel",
+          args,
+        ) ??
         false;
   }
 
@@ -326,7 +358,8 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent("message", () => message);
     return CustomTabsPostMessageResultType.fromNativeValue(
-            await channel?.invokeMethod<int>("postMessage", args)) ??
+          await channel?.invokeMethod<int>("postMessage", args),
+        ) ??
         CustomTabsPostMessageResultType.FAILURE_MESSAGING_ERROR;
   }
 
@@ -334,7 +367,9 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   Future<bool> isEngagementSignalsApiAvailable() async {
     Map<String, dynamic> args = <String, dynamic>{};
     return await channel?.invokeMethod<bool>(
-            "isEngagementSignalsApiAvailable", args) ??
+          "isEngagementSignalsApiAvailable",
+          args,
+        ) ??
         false;
   }
 
@@ -353,8 +388,10 @@ class AndroidChromeSafariBrowser extends PlatformChromeSafariBrowser
   }
 
   @override
-  Future<String?> getPackageName(
-      {List<String>? packages, bool ignoreDefault = false}) async {
+  Future<String?> getPackageName({
+    List<String>? packages,
+    bool ignoreDefault = false,
+  }) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent("packages", () => packages);
     args.putIfAbsent("ignoreDefault", () => ignoreDefault);

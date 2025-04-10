@@ -21,7 +21,8 @@ class MacOSWebStorageManagerCreationParams
 
   /// Creates a [MacOSWebStorageManagerCreationParams] instance based on [PlatformWebStorageManagerCreationParams].
   factory MacOSWebStorageManagerCreationParams.fromPlatformWebStorageManagerCreationParams(
-      PlatformWebStorageManagerCreationParams params) {
+    PlatformWebStorageManagerCreationParams params,
+  ) {
     return MacOSWebStorageManagerCreationParams(params);
   }
 }
@@ -31,14 +32,16 @@ class MacOSWebStorageManager extends PlatformWebStorageManager
     with ChannelController {
   /// Creates a new [MacOSWebStorageManager].
   MacOSWebStorageManager(PlatformWebStorageManagerCreationParams params)
-      : super.implementation(
-          params is MacOSWebStorageManagerCreationParams
-              ? params
-              : MacOSWebStorageManagerCreationParams
-                  .fromPlatformWebStorageManagerCreationParams(params),
-        ) {
-    channel =
-        const MethodChannel('wtf.zikzak/zikzak_inappwebview_webstoragemanager');
+    : super.implementation(
+        params is MacOSWebStorageManagerCreationParams
+            ? params
+            : MacOSWebStorageManagerCreationParams.fromPlatformWebStorageManagerCreationParams(
+              params,
+            ),
+      ) {
+    channel = const MethodChannel(
+      'wtf.zikzak/zikzak_inappwebview_webstoragemanager',
+    );
     handler = handleMethod;
     initMethodCallHandler();
   }
@@ -51,16 +54,20 @@ class MacOSWebStorageManager extends PlatformWebStorageManager
   }
 
   static MacOSWebStorageManager _init() {
-    _instance = MacOSWebStorageManager(MacOSWebStorageManagerCreationParams(
-        const PlatformWebStorageManagerCreationParams()));
+    _instance = MacOSWebStorageManager(
+      MacOSWebStorageManagerCreationParams(
+        const PlatformWebStorageManagerCreationParams(),
+      ),
+    );
     return _instance!;
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {}
 
   @override
-  Future<List<WebsiteDataRecord>> fetchDataRecords(
-      {required Set<WebsiteDataType> dataTypes}) async {
+  Future<List<WebsiteDataRecord>> fetchDataRecords({
+    required Set<WebsiteDataType> dataTypes,
+  }) async {
     List<WebsiteDataRecord> recordList = [];
     List<String> dataTypesList = [];
     for (var dataType in dataTypes) {
@@ -69,9 +76,11 @@ class MacOSWebStorageManager extends PlatformWebStorageManager
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent("dataTypes", () => dataTypesList);
     List<Map<dynamic, dynamic>> records =
-        (await channel?.invokeMethod<List>('fetchDataRecords', args))
-                ?.cast<Map<dynamic, dynamic>>() ??
-            [];
+        (await channel?.invokeMethod<List>(
+          'fetchDataRecords',
+          args,
+        ))?.cast<Map<dynamic, dynamic>>() ??
+        [];
     for (var record in records) {
       List<String> dataTypesString = record["dataTypes"].cast<String>();
       Set<WebsiteDataType> dataTypes = Set();
@@ -81,16 +90,21 @@ class MacOSWebStorageManager extends PlatformWebStorageManager
           dataTypes.add(dataType);
         }
       }
-      recordList.add(WebsiteDataRecord(
-          displayName: record["displayName"], dataTypes: dataTypes));
+      recordList.add(
+        WebsiteDataRecord(
+          displayName: record["displayName"],
+          dataTypes: dataTypes,
+        ),
+      );
     }
     return recordList;
   }
 
   @override
-  Future<void> removeDataFor(
-      {required Set<WebsiteDataType> dataTypes,
-      required List<WebsiteDataRecord> dataRecords}) async {
+  Future<void> removeDataFor({
+    required Set<WebsiteDataType> dataTypes,
+    required List<WebsiteDataRecord> dataRecords,
+  }) async {
     List<String> dataTypesList = [];
     for (var dataType in dataTypes) {
       dataTypesList.add(dataType.toNativeValue());
@@ -108,8 +122,10 @@ class MacOSWebStorageManager extends PlatformWebStorageManager
   }
 
   @override
-  Future<void> removeDataModifiedSince(
-      {required Set<WebsiteDataType> dataTypes, required DateTime date}) async {
+  Future<void> removeDataModifiedSince({
+    required Set<WebsiteDataType> dataTypes,
+    required DateTime date,
+  }) async {
     List<String> dataTypesList = [];
     for (var dataType in dataTypes) {
       dataTypesList.add(dataType.toNativeValue());

@@ -11,16 +11,21 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class MacOSPrintJobControllerCreationParams
     extends PlatformPrintJobControllerCreationParams {
   /// Creates a new [MacOSPrintJobControllerCreationParams] instance.
-  const MacOSPrintJobControllerCreationParams(
-      {required super.id, super.onComplete});
+  const MacOSPrintJobControllerCreationParams({
+    required super.id,
+    super.onComplete,
+  });
 
   /// Creates a [MacOSPrintJobControllerCreationParams] instance based on [PlatformPrintJobControllerCreationParams].
   factory MacOSPrintJobControllerCreationParams.fromPlatformPrintJobControllerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformPrintJobControllerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformPrintJobControllerCreationParams params,
+  ) {
     return MacOSPrintJobControllerCreationParams(
-        id: params.id, onComplete: params.onComplete);
+      id: params.id,
+      onComplete: params.onComplete,
+    );
   }
 }
 
@@ -29,15 +34,17 @@ class MacOSPrintJobController extends PlatformPrintJobController
     with ChannelController {
   /// Constructs a [MacOSPrintJobController].
   MacOSPrintJobController(PlatformPrintJobControllerCreationParams params)
-      : super.implementation(
-          params is MacOSPrintJobControllerCreationParams
-              ? params
-              : MacOSPrintJobControllerCreationParams
-                  .fromPlatformPrintJobControllerCreationParams(params),
-        ) {
+    : super.implementation(
+        params is MacOSPrintJobControllerCreationParams
+            ? params
+            : MacOSPrintJobControllerCreationParams.fromPlatformPrintJobControllerCreationParams(
+              params,
+            ),
+      ) {
     onComplete = params.onComplete;
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}');
+      'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }

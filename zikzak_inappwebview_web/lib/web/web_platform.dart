@@ -16,10 +16,13 @@ import 'shims/platform_view_registry.dart' show platformViewRegistry;
 class InAppWebViewFlutterPlugin {
   /// Constructs a new instance of [InAppWebViewFlutterPlugin].
   InAppWebViewFlutterPlugin(Registrar registrar) {
-    platformViewRegistry.registerViewFactory('wtf.zikzak/zikzak_inappwebview',
-        (int viewId) {
-      var webView =
-          InAppWebViewWebElement(viewId: viewId, messenger: registrar);
+    platformViewRegistry.registerViewFactory('wtf.zikzak/zikzak_inappwebview', (
+      int viewId,
+    ) {
+      var webView = InAppWebViewWebElement(
+        viewId: viewId,
+        messenger: registrar,
+      );
       WebPlatformManager.webViews.putIfAbsent(viewId, () => webView);
       return webView.iframeContainer;
     });
@@ -40,15 +43,22 @@ class InAppWebViewFlutterPlugin {
 /// Allows assigning a function to be callable from `window.zikzak_inappwebview.nativeCommunication()`
 @JS('zikzak_inappwebview.nativeCommunication')
 external set _nativeCommunication(
-    Future<dynamic> Function(String method, dynamic viewId, [List? args]) f);
+  Future<dynamic> Function(String method, dynamic viewId, [List? args]) f,
+);
 
 /// Allows calling the assigned function from Dart as well.
 @JS()
-external Future<dynamic> nativeCommunication(String method, dynamic viewId,
-    [List? args]);
+external Future<dynamic> nativeCommunication(
+  String method,
+  dynamic viewId, [
+  List? args,
+]);
 
-Future<dynamic> _dartNativeCommunication(String method, dynamic viewId,
-    [List? args]) async {
+Future<dynamic> _dartNativeCommunication(
+  String method,
+  dynamic viewId, [
+  List? args,
+]) async {
   if (WebPlatformManager.webViews.containsKey(viewId)) {
     var webViewHtmlElement =
         WebPlatformManager.webViews[viewId] as InAppWebViewWebElement;
@@ -81,7 +91,11 @@ Future<dynamic> _dartNativeCommunication(String method, dynamic viewId,
         String? target = args[2];
         String? windowFeatures = args[3];
         return await webViewHtmlElement.onCreateWindow(
-            windowId, url, target, windowFeatures);
+          windowId,
+          url,
+          target,
+          windowFeatures,
+        );
       case 'onWindowFocus':
         webViewHtmlElement.onWindowFocus();
         break;

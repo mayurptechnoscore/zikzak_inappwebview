@@ -11,16 +11,21 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class IOSPrintJobControllerCreationParams
     extends PlatformPrintJobControllerCreationParams {
   /// Creates a new [IOSPrintJobControllerCreationParams] instance.
-  const IOSPrintJobControllerCreationParams(
-      {required super.id, super.onComplete});
+  const IOSPrintJobControllerCreationParams({
+    required super.id,
+    super.onComplete,
+  });
 
   /// Creates a [IOSPrintJobControllerCreationParams] instance based on [PlatformPrintJobControllerCreationParams].
   factory IOSPrintJobControllerCreationParams.fromPlatformPrintJobControllerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformPrintJobControllerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformPrintJobControllerCreationParams params,
+  ) {
     return IOSPrintJobControllerCreationParams(
-        id: params.id, onComplete: params.onComplete);
+      id: params.id,
+      onComplete: params.onComplete,
+    );
   }
 }
 
@@ -33,11 +38,14 @@ class IOSPrintJobController extends PlatformPrintJobController
           params is IOSPrintJobControllerCreationParams
               ? params
               : IOSPrintJobControllerCreationParams
-                  .fromPlatformPrintJobControllerCreationParams(params),
+                  .fromPlatformPrintJobControllerCreationParams(
+                  params,
+                ),
         ) {
     onComplete = params.onComplete;
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}');
+      'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }

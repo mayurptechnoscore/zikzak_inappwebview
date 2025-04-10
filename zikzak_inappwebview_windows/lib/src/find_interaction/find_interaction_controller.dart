@@ -11,16 +11,19 @@ import 'package:zikzak_inappwebview_platform_interface/zikzak_inappwebview_platf
 class WindowsFindInteractionControllerCreationParams
     extends PlatformFindInteractionControllerCreationParams {
   /// Creates a new [WindowsFindInteractionControllerCreationParams] instance.
-  const WindowsFindInteractionControllerCreationParams(
-      {super.onFindResultReceived});
+  const WindowsFindInteractionControllerCreationParams({
+    super.onFindResultReceived,
+  });
 
   /// Creates a [WindowsFindInteractionControllerCreationParams] instance based on [PlatformFindInteractionControllerCreationParams].
   factory WindowsFindInteractionControllerCreationParams.fromPlatformFindInteractionControllerCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformFindInteractionControllerCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformFindInteractionControllerCreationParams params,
+  ) {
     return WindowsFindInteractionControllerCreationParams(
-        onFindResultReceived: params.onFindResultReceived);
+      onFindResultReceived: params.onFindResultReceived,
+    );
   }
 }
 
@@ -29,21 +32,24 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
     with ChannelController {
   /// Constructs a [WindowsFindInteractionController].
   WindowsFindInteractionController(
-      PlatformFindInteractionControllerCreationParams params)
-      : super.implementation(
+    PlatformFindInteractionControllerCreationParams params,
+  ) : super.implementation(
           params is WindowsFindInteractionControllerCreationParams
               ? params
               : WindowsFindInteractionControllerCreationParams
-                  .fromPlatformFindInteractionControllerCreationParams(params),
+                  .fromPlatformFindInteractionControllerCreationParams(
+                  params,
+                ),
         );
 
   _debugLog(String method, dynamic args) {
     debugLog(
-        className: this.runtimeType.toString(),
-        debugLoggingSettings:
-            PlatformFindInteractionController.debugLoggingSettings,
-        method: method,
-        args: args);
+      className: this.runtimeType.toString(),
+      debugLoggingSettings:
+          PlatformFindInteractionController.debugLoggingSettings,
+      method: method,
+      args: args,
+    );
   }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
@@ -56,7 +62,11 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
           int numberOfMatches = call.arguments["numberOfMatches"];
           bool isDoneCounting = call.arguments["isDoneCounting"];
           onFindResultReceived!(
-              this, activeMatchOrdinal, numberOfMatches, isDoneCounting);
+            this,
+            activeMatchOrdinal,
+            numberOfMatches,
+            isDoneCounting,
+          );
         }
         break;
       default:
@@ -101,9 +111,11 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
   ///{@macro zikzak_inappwebview_platform_interface.PlatformFindInteractionController.getActiveFindSession}
   Future<FindSession?> getActiveFindSession() async {
     Map<String, dynamic> args = <String, dynamic>{};
-    Map<String, dynamic>? result =
-        (await channel?.invokeMethod('getActiveFindSession', args))
-            ?.cast<String, dynamic>();
+    Map<String, dynamic>? result = (await channel?.invokeMethod(
+      'getActiveFindSession',
+      args,
+    ))
+        ?.cast<String, dynamic>();
     return FindSession.fromMap(result);
   }
 
@@ -117,8 +129,9 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
 extension InternalFindInteractionController
     on WindowsFindInteractionController {
   void init(dynamic id) {
-    channel =
-        MethodChannel('wtf.zikzak/zikzak_inappwebview_find_interaction_$id');
+    channel = MethodChannel(
+      'wtf.zikzak/zikzak_inappwebview_find_interaction_$id',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }

@@ -16,9 +16,10 @@ class WindowsWebMessagePortCreationParams
 
   /// Creates a [WindowsWebMessagePortCreationParams] instance based on [PlatformWebMessagePortCreationParams].
   factory WindowsWebMessagePortCreationParams.fromPlatformWebMessagePortCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformWebMessagePortCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformWebMessagePortCreationParams params,
+  ) {
     return WindowsWebMessagePortCreationParams(index: params.index);
   }
 
@@ -39,15 +40,19 @@ class WindowsWebMessagePort extends PlatformWebMessagePort {
           params is WindowsWebMessagePortCreationParams
               ? params
               : WindowsWebMessagePortCreationParams
-                  .fromPlatformWebMessagePortCreationParams(params),
+                  .fromPlatformWebMessagePortCreationParams(
+                  params,
+                ),
         );
 
   @override
   Future<void> setWebMessageCallback(WebMessageCallback? onMessage) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('index', () => params.index);
-    await _webMessageChannel.internalChannel
-        ?.invokeMethod('setWebMessageCallback', args);
+    await _webMessageChannel.internalChannel?.invokeMethod(
+      'setWebMessageCallback',
+      args,
+    );
     this._onMessage = onMessage;
   }
 
@@ -70,7 +75,7 @@ class WindowsWebMessagePort extends PlatformWebMessagePort {
   Map<String, dynamic> toMap() {
     return {
       "index": params.index,
-      "webMessageChannelId": this._webMessageChannel.params.id
+      "webMessageChannelId": this._webMessageChannel.params.id,
     };
   }
 

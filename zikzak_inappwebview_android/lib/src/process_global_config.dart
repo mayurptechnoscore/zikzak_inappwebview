@@ -20,7 +20,8 @@ class AndroidProcessGlobalConfigCreationParams
 
   /// Creates a [AndroidProcessGlobalConfigCreationParams] instance based on [PlatformProcessGlobalConfigCreationParams].
   factory AndroidProcessGlobalConfigCreationParams.fromPlatformProcessGlobalConfigCreationParams(
-      PlatformProcessGlobalConfigCreationParams params) {
+    PlatformProcessGlobalConfigCreationParams params,
+  ) {
     return AndroidProcessGlobalConfigCreationParams(params);
   }
 }
@@ -30,14 +31,16 @@ class AndroidProcessGlobalConfig extends PlatformProcessGlobalConfig
     with ChannelController {
   /// Creates a new [AndroidProcessGlobalConfig].
   AndroidProcessGlobalConfig(PlatformProcessGlobalConfigCreationParams params)
-      : super.implementation(
-          params is AndroidProcessGlobalConfigCreationParams
-              ? params
-              : AndroidProcessGlobalConfigCreationParams
-                  .fromPlatformProcessGlobalConfigCreationParams(params),
-        ) {
+    : super.implementation(
+        params is AndroidProcessGlobalConfigCreationParams
+            ? params
+            : AndroidProcessGlobalConfigCreationParams.fromPlatformProcessGlobalConfigCreationParams(
+              params,
+            ),
+      ) {
     channel = const MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_processglobalconfig');
+      'wtf.zikzak/zikzak_inappwebview_processglobalconfig',
+    );
     handler = handleMethod;
     initMethodCallHandler();
   }
@@ -51,8 +54,10 @@ class AndroidProcessGlobalConfig extends PlatformProcessGlobalConfig
 
   static AndroidProcessGlobalConfig _init() {
     _instance = AndroidProcessGlobalConfig(
-        AndroidProcessGlobalConfigCreationParams(
-            const PlatformProcessGlobalConfigCreationParams()));
+      AndroidProcessGlobalConfigCreationParams(
+        const PlatformProcessGlobalConfigCreationParams(),
+      ),
+    );
     return _instance!;
   }
 

@@ -11,17 +11,21 @@ import '../in_app_webview/in_app_webview_controller.dart';
 /// more information.
 class WindowsWebStorageCreationParams extends PlatformWebStorageCreationParams {
   /// Creates a new [WindowsWebStorageCreationParams] instance.
-  WindowsWebStorageCreationParams(
-      {required super.localStorage, required super.sessionStorage});
+  WindowsWebStorageCreationParams({
+    required super.localStorage,
+    required super.sessionStorage,
+  });
 
   /// Creates a [WindowsWebStorageCreationParams] instance based on [PlatformWebStorageCreationParams].
   factory WindowsWebStorageCreationParams.fromPlatformWebStorageCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformWebStorageCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformWebStorageCreationParams params,
+  ) {
     return WindowsWebStorageCreationParams(
-        localStorage: params.localStorage,
-        sessionStorage: params.sessionStorage);
+      localStorage: params.localStorage,
+      sessionStorage: params.sessionStorage,
+    );
   }
 }
 
@@ -33,7 +37,9 @@ class WindowsWebStorage extends PlatformWebStorage {
           params is WindowsWebStorageCreationParams
               ? params
               : WindowsWebStorageCreationParams
-                  .fromPlatformWebStorageCreationParams(params),
+                  .fromPlatformWebStorageCreationParams(
+                  params,
+                ),
         );
 
   @override
@@ -56,16 +62,21 @@ class WindowsWebStorage extends PlatformWebStorage {
 /// more information.
 class WindowsStorageCreationParams extends PlatformStorageCreationParams {
   /// Creates a new [WindowsStorageCreationParams] instance.
-  WindowsStorageCreationParams(
-      {required super.controller, required super.webStorageType});
+  WindowsStorageCreationParams({
+    required super.controller,
+    required super.webStorageType,
+  });
 
   /// Creates a [WindowsStorageCreationParams] instance based on [PlatformStorageCreationParams].
   factory WindowsStorageCreationParams.fromPlatformStorageCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformStorageCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformStorageCreationParams params,
+  ) {
     return WindowsStorageCreationParams(
-        controller: params.controller, webStorageType: params.webStorageType);
+      controller: params.controller,
+      webStorageType: params.webStorageType,
+    );
   }
 }
 
@@ -76,25 +87,31 @@ abstract class WindowsStorage implements PlatformStorage {
 
   @override
   Future<int?> length() async {
-    var result = await controller?.evaluateJavascript(source: """
+    var result = await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.length;
-    """);
+    """,
+    );
     return result != null ? int.parse(json.decode(result)) : null;
   }
 
   @override
   Future<void> setItem({required String key, required dynamic value}) async {
     var encodedValue = json.encode(value);
-    await controller?.evaluateJavascript(source: """
+    await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.setItem("$key", ${value is String ? encodedValue : "JSON.stringify($encodedValue)"});
-    """);
+    """,
+    );
   }
 
   @override
   Future<dynamic> getItem({required String key}) async {
-    var itemValue = await controller?.evaluateJavascript(source: """
+    var itemValue = await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.getItem("$key");
-    """);
+    """,
+    );
 
     if (itemValue == null) {
       return null;
@@ -109,17 +126,19 @@ abstract class WindowsStorage implements PlatformStorage {
 
   @override
   Future<void> removeItem({required String key}) async {
-    await controller?.evaluateJavascript(source: """
+    await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.removeItem("$key");
-    """);
+    """,
+    );
   }
 
   @override
   Future<List<WebStorageItem>> getItems() async {
     var webStorageItems = <WebStorageItem>[];
 
-    List<Map<dynamic, dynamic>>? items =
-        (await controller?.evaluateJavascript(source: """
+    List<Map<dynamic, dynamic>>? items = (await controller?.evaluateJavascript(
+      source: """
 (function() {
   var webStorageItems = [];
   for(var i = 0; i < window.$webStorageType.length; i++){
@@ -133,15 +152,18 @@ abstract class WindowsStorage implements PlatformStorage {
   }
   return webStorageItems;
 })();
-    """))?.cast<Map<dynamic, dynamic>>();
+    """,
+    ))
+        ?.cast<Map<dynamic, dynamic>>();
 
     if (items == null) {
       return webStorageItems;
     }
 
     for (var item in items) {
-      webStorageItems
-          .add(WebStorageItem(key: item["key"], value: item["value"]));
+      webStorageItems.add(
+        WebStorageItem(key: item["key"], value: item["value"]),
+      );
     }
 
     return webStorageItems;
@@ -149,16 +171,20 @@ abstract class WindowsStorage implements PlatformStorage {
 
   @override
   Future<void> clear() async {
-    await controller?.evaluateJavascript(source: """
+    await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.clear();
-    """);
+    """,
+    );
   }
 
   @override
   Future<String> key({required int index}) async {
-    var result = await controller?.evaluateJavascript(source: """
+    var result = await controller?.evaluateJavascript(
+      source: """
     window.$webStorageType.key($index);
-    """);
+    """,
+    );
     return result != null ? json.decode(result) : null;
   }
 
@@ -180,9 +206,10 @@ class WindowsLocalStorageCreationParams
 
   /// Creates a [WindowsLocalStorageCreationParams] instance based on [PlatformLocalStorageCreationParams].
   factory WindowsLocalStorageCreationParams.fromPlatformLocalStorageCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformLocalStorageCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformLocalStorageCreationParams params,
+  ) {
     return WindowsLocalStorageCreationParams(params);
   }
 }
@@ -195,16 +222,25 @@ class WindowsLocalStorage extends PlatformLocalStorage with WindowsStorage {
           params is WindowsLocalStorageCreationParams
               ? params
               : WindowsLocalStorageCreationParams
-                  .fromPlatformLocalStorageCreationParams(params),
+                  .fromPlatformLocalStorageCreationParams(
+                  params,
+                ),
         );
 
   /// Default storage
-  factory WindowsLocalStorage.defaultStorage(
-      {required PlatformInAppWebViewController? controller}) {
-    return WindowsLocalStorage(WindowsLocalStorageCreationParams(
-        PlatformLocalStorageCreationParams(PlatformStorageCreationParams(
+  factory WindowsLocalStorage.defaultStorage({
+    required PlatformInAppWebViewController? controller,
+  }) {
+    return WindowsLocalStorage(
+      WindowsLocalStorageCreationParams(
+        PlatformLocalStorageCreationParams(
+          PlatformStorageCreationParams(
             controller: controller,
-            webStorageType: WebStorageType.LOCAL_STORAGE))));
+            webStorageType: WebStorageType.LOCAL_STORAGE,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
@@ -224,9 +260,10 @@ class WindowsSessionStorageCreationParams
 
   /// Creates a [WindowsSessionStorageCreationParams] instance based on [PlatformSessionStorageCreationParams].
   factory WindowsSessionStorageCreationParams.fromPlatformSessionStorageCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformSessionStorageCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformSessionStorageCreationParams params,
+  ) {
     return WindowsSessionStorageCreationParams(params);
   }
 }
@@ -239,16 +276,25 @@ class WindowsSessionStorage extends PlatformSessionStorage with WindowsStorage {
           params is WindowsSessionStorageCreationParams
               ? params
               : WindowsSessionStorageCreationParams
-                  .fromPlatformSessionStorageCreationParams(params),
+                  .fromPlatformSessionStorageCreationParams(
+                  params,
+                ),
         );
 
   /// Default storage
-  factory WindowsSessionStorage.defaultStorage(
-      {required PlatformInAppWebViewController? controller}) {
-    return WindowsSessionStorage(WindowsSessionStorageCreationParams(
-        PlatformSessionStorageCreationParams(PlatformStorageCreationParams(
+  factory WindowsSessionStorage.defaultStorage({
+    required PlatformInAppWebViewController? controller,
+  }) {
+    return WindowsSessionStorage(
+      WindowsSessionStorageCreationParams(
+        PlatformSessionStorageCreationParams(
+          PlatformStorageCreationParams(
             controller: controller,
-            webStorageType: WebStorageType.SESSION_STORAGE))));
+            webStorageType: WebStorageType.SESSION_STORAGE,
+          ),
+        ),
+      ),
+    );
   }
 
   @override
