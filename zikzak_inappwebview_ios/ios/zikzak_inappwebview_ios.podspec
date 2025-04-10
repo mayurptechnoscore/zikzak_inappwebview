@@ -17,20 +17,21 @@ A new Flutter plugin.
   s.resources = 'Storyboards/**/*.storyboard'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
+  s.dependency 'OrderedSet', '~> 5.0'
+  s.weak_framework = 'WebKit'  # Make WebKit a weak framework for better version compatibility
 
-  # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
-
-  s.libraries = 'swiftCoreGraphics'
-
-  s.xcconfig = {
-      'LIBRARY_SEARCH_PATHS' => '$(SDKROOT)/usr/lib/swift',
+  s.platform = :ios, '12.0'
+  s.ios.deployment_target = '12.0'
+  
+  s.pod_target_xcconfig = { 
+    'DEFINES_MODULE' => 'YES',
+    'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64 arm64',
+    'ENABLE_BITCODE' => 'NO'
   }
 
   s.swift_version = '5.0'
 
   s.platforms = { :ios => '11.0' }
-  s.dependency 'OrderedSet', '~>5.0'
 
   s.default_subspec = 'Core'
 

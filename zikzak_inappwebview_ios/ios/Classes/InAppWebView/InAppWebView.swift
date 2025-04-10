@@ -853,7 +853,18 @@ public class InAppWebView: WKWebView, UIScrollViewDelegate, WKUIDelegate,
         let pdfConfiguration: WKPDFConfiguration = .init()
         if let configuration = configuration {
             if let rect = configuration["rect"] as? [String: Double] {
-                pdfConfiguration.rect = CGRect.fromMap(map: rect)
+                let cgRect = CGRect.fromMap(map: rect)
+                // Use a safe approach for iOS 18.2+ compatibility
+                if pdfConfiguration.responds(to: NSSelectorFromString("setRect:")) {
+                    // Try using KVC instead of direct property access
+                    do {
+                        pdfConfiguration.setValue(cgRect, forKey: "rect")
+                    } catch {
+                        print("Error setting rect property: \(error.localizedDescription)")
+                    }
+                } else {
+                    print("WKPDFConfiguration does not respond to setRect selector on this iOS version")
+                }
             }
         }
         createPDF(configuration: pdfConfiguration) { (result) in

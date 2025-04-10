@@ -30,16 +30,20 @@ public class PrintJobInfo: NSObject {
     }
     
     public func toMap () -> [String:Any?] {
-        return [
+        // Only include properties that are available across all iOS versions
+        var map: [String: Any?] = [
             "state": state.rawValue,
             "attributes": attributes.toMap(),
-            "copies": nil,
-            "numberOfPages": numberOfPages,
             "creationTime": creationTime,
-            "label": label,
-            "printer": [
-                "id": printerId
-            ]
+            "label": label
         ]
+        
+        if let pages = numberOfPages {
+            map["numberOfPages"] = pages
+        }
+        if let pId = printerId {
+            map["printer"] = ["id": pId]
+        }
+        return map
     }
 }
