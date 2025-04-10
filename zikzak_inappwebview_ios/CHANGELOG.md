@@ -1,3 +1,7 @@
+## 1.2.1 - 2025-04-10
+
+* Bump version
+
 ## 1.2.0 - 2025-04-10
 
 IOS 18.2 updates, fixed PDF creating issue
