@@ -28,18 +28,18 @@ class WindowsHttpAuthCredentialDatabaseCreationParams
 
 ///{@macro zikzak_inappwebview_platform_interface.PlatformHttpAuthCredentialDatabase}
 class WindowsHttpAuthCredentialDatabase
-    extends PlatformHttpAuthCredentialDatabase
-    with ChannelController {
+    extends PlatformHttpAuthCredentialDatabase with ChannelController {
   /// Creates a new [WindowsHttpAuthCredentialDatabase].
   WindowsHttpAuthCredentialDatabase(
     PlatformHttpAuthCredentialDatabaseCreationParams params,
   ) : super.implementation(
-        params is WindowsHttpAuthCredentialDatabaseCreationParams
-            ? params
-            : WindowsHttpAuthCredentialDatabaseCreationParams.fromPlatformHttpAuthCredentialDatabaseCreationParams(
-              params,
-            ),
-      ) {
+          params is WindowsHttpAuthCredentialDatabaseCreationParams
+              ? params
+              : WindowsHttpAuthCredentialDatabaseCreationParams
+                  .fromPlatformHttpAuthCredentialDatabaseCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_credential_database',
     );
@@ -67,7 +67,7 @@ class WindowsHttpAuthCredentialDatabase
 
   @override
   Future<List<URLProtectionSpaceHttpAuthCredentials>>
-  getAllAuthCredentials() async {
+      getAllAuthCredentials() async {
     Map<String, dynamic> args = <String, dynamic>{};
     List<dynamic> allCredentials =
         await channel?.invokeMethod<List>('getAllAuthCredentials', args) ?? [];

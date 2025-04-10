@@ -34,13 +34,14 @@ class IOSChromeSafariBrowser extends PlatformChromeSafariBrowser
 
   /// Constructs a [IOSChromeSafariBrowser].
   IOSChromeSafariBrowser(PlatformChromeSafariBrowserCreationParams params)
-    : super.implementation(
-        params is IOSChromeSafariBrowserCreationParams
-            ? params
-            : IOSChromeSafariBrowserCreationParams.fromPlatformChromeSafariBrowserCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSChromeSafariBrowserCreationParams
+              ? params
+              : IOSChromeSafariBrowserCreationParams
+                  .fromPlatformChromeSafariBrowserCreationParams(
+                  params,
+                ),
+        );
 
   static final IOSChromeSafariBrowser _staticValue = IOSChromeSafariBrowser(
     IOSChromeSafariBrowserCreationParams(),
@@ -146,8 +147,7 @@ class IOSChromeSafariBrowser extends PlatformChromeSafariBrowser
       menuItemList.add(value.toMap());
     });
 
-    var initialSettings =
-        settings?.toMap() ??
+    var initialSettings = settings?.toMap() ??
         options?.toMap() ??
         ChromeSafariBrowserSettings().toMap();
 
@@ -200,11 +200,11 @@ class IOSChromeSafariBrowser extends PlatformChromeSafariBrowser
   Future<PrewarmingToken?> prewarmConnections(List<WebUri> URLs) async {
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('URLs', () => URLs.map((e) => e.toString()).toList());
-    Map<String, dynamic>? result =
-        (await _staticChannel.invokeMethod(
-          "prewarmConnections",
-          args,
-        ))?.cast<String, dynamic>();
+    Map<String, dynamic>? result = (await _staticChannel.invokeMethod(
+      "prewarmConnections",
+      args,
+    ))
+        ?.cast<String, dynamic>();
     return PrewarmingToken.fromMap(result);
   }
 

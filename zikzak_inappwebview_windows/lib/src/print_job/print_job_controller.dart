@@ -34,13 +34,14 @@ class WindowsPrintJobController extends PlatformPrintJobController
     with ChannelController {
   /// Constructs a [WindowsPrintJobController].
   WindowsPrintJobController(PlatformPrintJobControllerCreationParams params)
-    : super.implementation(
-        params is WindowsPrintJobControllerCreationParams
-            ? params
-            : WindowsPrintJobControllerCreationParams.fromPlatformPrintJobControllerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsPrintJobControllerCreationParams
+              ? params
+              : WindowsPrintJobControllerCreationParams
+                  .fromPlatformPrintJobControllerCreationParams(
+                  params,
+                ),
+        ) {
     onComplete = params.onComplete;
     channel = MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_printjobcontroller_${params.id}',

@@ -34,13 +34,14 @@ class WebPlatformWebStorageCreationParams
 class WebPlatformWebStorage extends PlatformWebStorage {
   /// Constructs a [WebPlatformWebStorage].
   WebPlatformWebStorage(PlatformWebStorageCreationParams params)
-    : super.implementation(
-        params is WebPlatformWebStorageCreationParams
-            ? params
-            : WebPlatformWebStorageCreationParams.fromPlatformWebStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WebPlatformWebStorageCreationParams
+              ? params
+              : WebPlatformWebStorageCreationParams
+                  .fromPlatformWebStorageCreationParams(
+                  params,
+                ),
+        );
 
   @override
   PlatformLocalStorage get localStorage => params.localStorage;
@@ -137,9 +138,8 @@ abstract class WebPlatformStorage implements PlatformStorage {
   Future<List<WebStorageItem>> getItems() async {
     var webStorageItems = <WebStorageItem>[];
 
-    List<Map<dynamic, dynamic>>? items =
-        (await controller?.evaluateJavascript(
-          source: """
+    List<Map<dynamic, dynamic>>? items = (await controller?.evaluateJavascript(
+      source: """
 (function() {
   var webStorageItems = [];
   for(var i = 0; i < window.$webStorageType.length; i++){
@@ -154,7 +154,8 @@ abstract class WebPlatformStorage implements PlatformStorage {
   return webStorageItems;
 })();
     """,
-        ))?.cast<Map<dynamic, dynamic>>();
+    ))
+        ?.cast<Map<dynamic, dynamic>>();
 
     if (items == null) {
       return webStorageItems;
@@ -219,13 +220,14 @@ class WebPlatformLocalStorage extends PlatformLocalStorage
     with WebPlatformStorage {
   /// Constructs a [WebPlatformLocalStorage].
   WebPlatformLocalStorage(PlatformLocalStorageCreationParams params)
-    : super.implementation(
-        params is WebPlatformLocalStorageCreationParams
-            ? params
-            : WebPlatformLocalStorageCreationParams.fromPlatformLocalStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WebPlatformLocalStorageCreationParams
+              ? params
+              : WebPlatformLocalStorageCreationParams
+                  .fromPlatformLocalStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory WebPlatformLocalStorage.defaultStorage({
@@ -273,13 +275,14 @@ class WebPlatformSessionStorage extends PlatformSessionStorage
     with WebPlatformStorage {
   /// Constructs a [WebPlatformSessionStorage].
   WebPlatformSessionStorage(PlatformSessionStorageCreationParams params)
-    : super.implementation(
-        params is WebPlatformSessionStorageCreationParams
-            ? params
-            : WebPlatformSessionStorageCreationParams.fromPlatformSessionStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WebPlatformSessionStorageCreationParams
+              ? params
+              : WebPlatformSessionStorageCreationParams
+                  .fromPlatformSessionStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory WebPlatformSessionStorage.defaultStorage({

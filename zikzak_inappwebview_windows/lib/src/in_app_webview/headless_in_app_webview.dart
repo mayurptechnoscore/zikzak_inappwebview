@@ -135,114 +135,115 @@ class WindowsHeadlessInAppWebViewCreationParams
   WindowsHeadlessInAppWebViewCreationParams.fromPlatformHeadlessInAppWebViewCreationParams(
     PlatformHeadlessInAppWebViewCreationParams params,
   ) : this(
-        controllerFromPlatform: params.controllerFromPlatform,
-        webViewEnvironment:
-            params.webViewEnvironment as WindowsWebViewEnvironment?,
-        initialSize: params.initialSize,
-        windowId: params.windowId,
-        onWebViewCreated: params.onWebViewCreated,
-        onLoadStart: params.onLoadStart,
-        onLoadStop: params.onLoadStop,
-        onLoadError: params.onLoadError,
-        onReceivedError: params.onReceivedError,
-        onLoadHttpError: params.onLoadHttpError,
-        onReceivedHttpError: params.onReceivedHttpError,
-        onProgressChanged: params.onProgressChanged,
-        onConsoleMessage: params.onConsoleMessage,
-        shouldOverrideUrlLoading: params.shouldOverrideUrlLoading,
-        onLoadResource: params.onLoadResource,
-        onScrollChanged: params.onScrollChanged,
-        onDownloadStart: params.onDownloadStart,
-        onDownloadStartRequest: params.onDownloadStartRequest,
-        onLoadResourceCustomScheme: params.onLoadResourceCustomScheme,
-        onLoadResourceWithCustomScheme: params.onLoadResourceWithCustomScheme,
-        onCreateWindow: params.onCreateWindow,
-        onCloseWindow: params.onCloseWindow,
-        onJsAlert: params.onJsAlert,
-        onJsConfirm: params.onJsConfirm,
-        onJsPrompt: params.onJsPrompt,
-        onReceivedHttpAuthRequest: params.onReceivedHttpAuthRequest,
-        onReceivedServerTrustAuthRequest:
-            params.onReceivedServerTrustAuthRequest,
-        onReceivedClientCertRequest: params.onReceivedClientCertRequest,
-        onFindResultReceived: params.onFindResultReceived,
-        shouldInterceptAjaxRequest: params.shouldInterceptAjaxRequest,
-        onAjaxReadyStateChange: params.onAjaxReadyStateChange,
-        onAjaxProgress: params.onAjaxProgress,
-        shouldInterceptFetchRequest: params.shouldInterceptFetchRequest,
-        onUpdateVisitedHistory: params.onUpdateVisitedHistory,
-        onPrint: params.onPrint,
-        onPrintRequest: params.onPrintRequest,
-        onLongPressHitTestResult: params.onLongPressHitTestResult,
-        onEnterFullscreen: params.onEnterFullscreen,
-        onExitFullscreen: params.onExitFullscreen,
-        onPageCommitVisible: params.onPageCommitVisible,
-        onTitleChanged: params.onTitleChanged,
-        onWindowFocus: params.onWindowFocus,
-        onWindowBlur: params.onWindowBlur,
-        onOverScrolled: params.onOverScrolled,
-        onZoomScaleChanged: params.onZoomScaleChanged,
-        androidOnSafeBrowsingHit: params.androidOnSafeBrowsingHit,
-        onSafeBrowsingHit: params.onSafeBrowsingHit,
-        androidOnPermissionRequest: params.androidOnPermissionRequest,
-        onPermissionRequest: params.onPermissionRequest,
-        androidOnGeolocationPermissionsShowPrompt:
-            params.androidOnGeolocationPermissionsShowPrompt,
-        onGeolocationPermissionsShowPrompt:
-            params.onGeolocationPermissionsShowPrompt,
-        androidOnGeolocationPermissionsHidePrompt:
-            params.androidOnGeolocationPermissionsHidePrompt,
-        onGeolocationPermissionsHidePrompt:
-            params.onGeolocationPermissionsHidePrompt,
-        androidShouldInterceptRequest: params.androidShouldInterceptRequest,
-        shouldInterceptRequest: params.shouldInterceptRequest,
-        androidOnRenderProcessGone: params.androidOnRenderProcessGone,
-        onRenderProcessGone: params.onRenderProcessGone,
-        androidOnRenderProcessResponsive:
-            params.androidOnRenderProcessResponsive,
-        onRenderProcessResponsive: params.onRenderProcessResponsive,
-        androidOnRenderProcessUnresponsive:
-            params.androidOnRenderProcessUnresponsive,
-        onRenderProcessUnresponsive: params.onRenderProcessUnresponsive,
-        androidOnFormResubmission: params.androidOnFormResubmission,
-        onFormResubmission: params.onFormResubmission,
-        androidOnScaleChanged: params.androidOnScaleChanged,
-        androidOnReceivedIcon: params.androidOnReceivedIcon,
-        onReceivedIcon: params.onReceivedIcon,
-        androidOnReceivedTouchIconUrl: params.androidOnReceivedTouchIconUrl,
-        onReceivedTouchIconUrl: params.onReceivedTouchIconUrl,
-        androidOnJsBeforeUnload: params.androidOnJsBeforeUnload,
-        onJsBeforeUnload: params.onJsBeforeUnload,
-        androidOnReceivedLoginRequest: params.androidOnReceivedLoginRequest,
-        onReceivedLoginRequest: params.onReceivedLoginRequest,
-        onPermissionRequestCanceled: params.onPermissionRequestCanceled,
-        onRequestFocus: params.onRequestFocus,
-        iosOnWebContentProcessDidTerminate:
-            params.iosOnWebContentProcessDidTerminate,
-        onWebContentProcessDidTerminate: params.onWebContentProcessDidTerminate,
-        iosOnDidReceiveServerRedirectForProvisionalNavigation:
-            params.iosOnDidReceiveServerRedirectForProvisionalNavigation,
-        onDidReceiveServerRedirectForProvisionalNavigation:
-            params.onDidReceiveServerRedirectForProvisionalNavigation,
-        iosOnNavigationResponse: params.iosOnNavigationResponse,
-        onNavigationResponse: params.onNavigationResponse,
-        iosShouldAllowDeprecatedTLS: params.iosShouldAllowDeprecatedTLS,
-        shouldAllowDeprecatedTLS: params.shouldAllowDeprecatedTLS,
-        onCameraCaptureStateChanged: params.onCameraCaptureStateChanged,
-        onMicrophoneCaptureStateChanged: params.onMicrophoneCaptureStateChanged,
-        onContentSizeChanged: params.onContentSizeChanged,
-        initialUrlRequest: params.initialUrlRequest,
-        initialFile: params.initialFile,
-        initialData: params.initialData,
-        initialOptions: params.initialOptions,
-        initialSettings: params.initialSettings,
-        contextMenu: params.contextMenu,
-        initialUserScripts: params.initialUserScripts,
-        pullToRefreshController: params.pullToRefreshController,
-        findInteractionController:
-            params.findInteractionController
-                as WindowsFindInteractionController?,
-      );
+          controllerFromPlatform: params.controllerFromPlatform,
+          webViewEnvironment:
+              params.webViewEnvironment as WindowsWebViewEnvironment?,
+          initialSize: params.initialSize,
+          windowId: params.windowId,
+          onWebViewCreated: params.onWebViewCreated,
+          onLoadStart: params.onLoadStart,
+          onLoadStop: params.onLoadStop,
+          onLoadError: params.onLoadError,
+          onReceivedError: params.onReceivedError,
+          onLoadHttpError: params.onLoadHttpError,
+          onReceivedHttpError: params.onReceivedHttpError,
+          onProgressChanged: params.onProgressChanged,
+          onConsoleMessage: params.onConsoleMessage,
+          shouldOverrideUrlLoading: params.shouldOverrideUrlLoading,
+          onLoadResource: params.onLoadResource,
+          onScrollChanged: params.onScrollChanged,
+          onDownloadStart: params.onDownloadStart,
+          onDownloadStartRequest: params.onDownloadStartRequest,
+          onLoadResourceCustomScheme: params.onLoadResourceCustomScheme,
+          onLoadResourceWithCustomScheme: params.onLoadResourceWithCustomScheme,
+          onCreateWindow: params.onCreateWindow,
+          onCloseWindow: params.onCloseWindow,
+          onJsAlert: params.onJsAlert,
+          onJsConfirm: params.onJsConfirm,
+          onJsPrompt: params.onJsPrompt,
+          onReceivedHttpAuthRequest: params.onReceivedHttpAuthRequest,
+          onReceivedServerTrustAuthRequest:
+              params.onReceivedServerTrustAuthRequest,
+          onReceivedClientCertRequest: params.onReceivedClientCertRequest,
+          onFindResultReceived: params.onFindResultReceived,
+          shouldInterceptAjaxRequest: params.shouldInterceptAjaxRequest,
+          onAjaxReadyStateChange: params.onAjaxReadyStateChange,
+          onAjaxProgress: params.onAjaxProgress,
+          shouldInterceptFetchRequest: params.shouldInterceptFetchRequest,
+          onUpdateVisitedHistory: params.onUpdateVisitedHistory,
+          onPrint: params.onPrint,
+          onPrintRequest: params.onPrintRequest,
+          onLongPressHitTestResult: params.onLongPressHitTestResult,
+          onEnterFullscreen: params.onEnterFullscreen,
+          onExitFullscreen: params.onExitFullscreen,
+          onPageCommitVisible: params.onPageCommitVisible,
+          onTitleChanged: params.onTitleChanged,
+          onWindowFocus: params.onWindowFocus,
+          onWindowBlur: params.onWindowBlur,
+          onOverScrolled: params.onOverScrolled,
+          onZoomScaleChanged: params.onZoomScaleChanged,
+          androidOnSafeBrowsingHit: params.androidOnSafeBrowsingHit,
+          onSafeBrowsingHit: params.onSafeBrowsingHit,
+          androidOnPermissionRequest: params.androidOnPermissionRequest,
+          onPermissionRequest: params.onPermissionRequest,
+          androidOnGeolocationPermissionsShowPrompt:
+              params.androidOnGeolocationPermissionsShowPrompt,
+          onGeolocationPermissionsShowPrompt:
+              params.onGeolocationPermissionsShowPrompt,
+          androidOnGeolocationPermissionsHidePrompt:
+              params.androidOnGeolocationPermissionsHidePrompt,
+          onGeolocationPermissionsHidePrompt:
+              params.onGeolocationPermissionsHidePrompt,
+          androidShouldInterceptRequest: params.androidShouldInterceptRequest,
+          shouldInterceptRequest: params.shouldInterceptRequest,
+          androidOnRenderProcessGone: params.androidOnRenderProcessGone,
+          onRenderProcessGone: params.onRenderProcessGone,
+          androidOnRenderProcessResponsive:
+              params.androidOnRenderProcessResponsive,
+          onRenderProcessResponsive: params.onRenderProcessResponsive,
+          androidOnRenderProcessUnresponsive:
+              params.androidOnRenderProcessUnresponsive,
+          onRenderProcessUnresponsive: params.onRenderProcessUnresponsive,
+          androidOnFormResubmission: params.androidOnFormResubmission,
+          onFormResubmission: params.onFormResubmission,
+          androidOnScaleChanged: params.androidOnScaleChanged,
+          androidOnReceivedIcon: params.androidOnReceivedIcon,
+          onReceivedIcon: params.onReceivedIcon,
+          androidOnReceivedTouchIconUrl: params.androidOnReceivedTouchIconUrl,
+          onReceivedTouchIconUrl: params.onReceivedTouchIconUrl,
+          androidOnJsBeforeUnload: params.androidOnJsBeforeUnload,
+          onJsBeforeUnload: params.onJsBeforeUnload,
+          androidOnReceivedLoginRequest: params.androidOnReceivedLoginRequest,
+          onReceivedLoginRequest: params.onReceivedLoginRequest,
+          onPermissionRequestCanceled: params.onPermissionRequestCanceled,
+          onRequestFocus: params.onRequestFocus,
+          iosOnWebContentProcessDidTerminate:
+              params.iosOnWebContentProcessDidTerminate,
+          onWebContentProcessDidTerminate:
+              params.onWebContentProcessDidTerminate,
+          iosOnDidReceiveServerRedirectForProvisionalNavigation:
+              params.iosOnDidReceiveServerRedirectForProvisionalNavigation,
+          onDidReceiveServerRedirectForProvisionalNavigation:
+              params.onDidReceiveServerRedirectForProvisionalNavigation,
+          iosOnNavigationResponse: params.iosOnNavigationResponse,
+          onNavigationResponse: params.onNavigationResponse,
+          iosShouldAllowDeprecatedTLS: params.iosShouldAllowDeprecatedTLS,
+          shouldAllowDeprecatedTLS: params.shouldAllowDeprecatedTLS,
+          onCameraCaptureStateChanged: params.onCameraCaptureStateChanged,
+          onMicrophoneCaptureStateChanged:
+              params.onMicrophoneCaptureStateChanged,
+          onContentSizeChanged: params.onContentSizeChanged,
+          initialUrlRequest: params.initialUrlRequest,
+          initialFile: params.initialFile,
+          initialData: params.initialData,
+          initialOptions: params.initialOptions,
+          initialSettings: params.initialSettings,
+          contextMenu: params.contextMenu,
+          initialUserScripts: params.initialUserScripts,
+          pullToRefreshController: params.pullToRefreshController,
+          findInteractionController: params.findInteractionController
+              as WindowsFindInteractionController?,
+        );
 
   @override
   final WindowsFindInteractionController? findInteractionController;
@@ -268,13 +269,14 @@ class WindowsHeadlessInAppWebView extends PlatformHeadlessInAppWebView
 
   /// Constructs a [WindowsHeadlessInAppWebView].
   WindowsHeadlessInAppWebView(PlatformHeadlessInAppWebViewCreationParams params)
-    : super.implementation(
-        params is WindowsHeadlessInAppWebViewCreationParams
-            ? params
-            : WindowsHeadlessInAppWebViewCreationParams.fromPlatformHeadlessInAppWebViewCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsHeadlessInAppWebViewCreationParams
+              ? params
+              : WindowsHeadlessInAppWebViewCreationParams
+                  .fromPlatformHeadlessInAppWebViewCreationParams(
+                  params,
+                ),
+        ) {
     id = IdGenerator.generate();
   }
 
@@ -295,7 +297,7 @@ class WindowsHeadlessInAppWebView extends PlatformHeadlessInAppWebView
     );
     _controllerFromPlatform =
         params.controllerFromPlatform?.call(_webViewController!) ??
-        _webViewController!;
+            _webViewController!;
     _windowsParams.findInteractionController?.init(id);
     channel = MethodChannel('wtf.zikzak/flutter_headless_inappwebview_$id');
     handler = _handleMethod;
@@ -327,13 +329,13 @@ class WindowsHeadlessInAppWebView extends PlatformHeadlessInAppWebView
 
     Map<String, dynamic> settingsMap =
         (params.initialSettings != null ? initialSettings.toMap() : null) ??
-        params.initialOptions?.toMap() ??
-        initialSettings.toMap();
+            params.initialOptions?.toMap() ??
+            initialSettings.toMap();
 
     Map<String, dynamic> pullToRefreshSettings =
         _windowsParams.pullToRefreshController?.params.settings.toMap() ??
-        _windowsParams.pullToRefreshController?.params.options.toMap() ??
-        PullToRefreshSettings(enabled: false).toMap();
+            _windowsParams.pullToRefreshController?.params.options.toMap() ??
+            PullToRefreshSettings(enabled: false).toMap();
 
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent('id', () => id);

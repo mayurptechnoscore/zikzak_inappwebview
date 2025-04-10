@@ -33,13 +33,14 @@ class WindowsWebStorageCreationParams extends PlatformWebStorageCreationParams {
 class WindowsWebStorage extends PlatformWebStorage {
   /// Constructs a [WindowsWebStorage].
   WindowsWebStorage(PlatformWebStorageCreationParams params)
-    : super.implementation(
-        params is WindowsWebStorageCreationParams
-            ? params
-            : WindowsWebStorageCreationParams.fromPlatformWebStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WindowsWebStorageCreationParams
+              ? params
+              : WindowsWebStorageCreationParams
+                  .fromPlatformWebStorageCreationParams(
+                  params,
+                ),
+        );
 
   @override
   PlatformLocalStorage get localStorage => params.localStorage;
@@ -136,9 +137,8 @@ abstract class WindowsStorage implements PlatformStorage {
   Future<List<WebStorageItem>> getItems() async {
     var webStorageItems = <WebStorageItem>[];
 
-    List<Map<dynamic, dynamic>>? items =
-        (await controller?.evaluateJavascript(
-          source: """
+    List<Map<dynamic, dynamic>>? items = (await controller?.evaluateJavascript(
+      source: """
 (function() {
   var webStorageItems = [];
   for(var i = 0; i < window.$webStorageType.length; i++){
@@ -153,7 +153,8 @@ abstract class WindowsStorage implements PlatformStorage {
   return webStorageItems;
 })();
     """,
-        ))?.cast<Map<dynamic, dynamic>>();
+    ))
+        ?.cast<Map<dynamic, dynamic>>();
 
     if (items == null) {
       return webStorageItems;
@@ -217,13 +218,14 @@ class WindowsLocalStorageCreationParams
 class WindowsLocalStorage extends PlatformLocalStorage with WindowsStorage {
   /// Constructs a [WindowsLocalStorage].
   WindowsLocalStorage(PlatformLocalStorageCreationParams params)
-    : super.implementation(
-        params is WindowsLocalStorageCreationParams
-            ? params
-            : WindowsLocalStorageCreationParams.fromPlatformLocalStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WindowsLocalStorageCreationParams
+              ? params
+              : WindowsLocalStorageCreationParams
+                  .fromPlatformLocalStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory WindowsLocalStorage.defaultStorage({
@@ -270,13 +272,14 @@ class WindowsSessionStorageCreationParams
 class WindowsSessionStorage extends PlatformSessionStorage with WindowsStorage {
   /// Constructs a [WindowsSessionStorage].
   WindowsSessionStorage(PlatformSessionStorageCreationParams params)
-    : super.implementation(
-        params is WindowsSessionStorageCreationParams
-            ? params
-            : WindowsSessionStorageCreationParams.fromPlatformSessionStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WindowsSessionStorageCreationParams
+              ? params
+              : WindowsSessionStorageCreationParams
+                  .fromPlatformSessionStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory WindowsSessionStorage.defaultStorage({

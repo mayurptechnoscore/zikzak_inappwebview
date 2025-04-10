@@ -36,13 +36,14 @@ class WebPlatformCookieManager extends PlatformCookieManager
     with ChannelController {
   /// Creates a new [WebPlatformCookieManager].
   WebPlatformCookieManager(PlatformCookieManagerCreationParams params)
-    : super.implementation(
-        params is WebPlatformCookieManagerCreationParams
-            ? params
-            : WebPlatformCookieManagerCreationParams.fromPlatformCookieManagerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WebPlatformCookieManagerCreationParams
+              ? params
+              : WebPlatformCookieManagerCreationParams
+                  .fromPlatformCookieManagerCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_cookiemanager',
     );
@@ -193,9 +194,8 @@ class WebPlatformCookieManager extends PlatformCookieManager
       if (javaScriptEnabled) {
         List<String> documentCookies =
             (await webViewController.evaluateJavascript(
-                      source: 'document.cookie',
-                    )
-                    as String)
+          source: 'document.cookie',
+        ) as String)
                 .split(';')
                 .map((documentCookie) => documentCookie.trim())
                 .toList();
@@ -223,9 +223,8 @@ class WebPlatformCookieManager extends PlatformCookieManager
 
     List<String> documentCookies =
         (await headlessWebView.webViewController!.evaluateJavascript(
-                  source: 'document.cookie',
-                )
-                as String)
+      source: 'document.cookie',
+    ) as String)
             .split(';')
             .map((documentCookie) => documentCookie.trim())
             .toList();
@@ -257,9 +256,9 @@ class WebPlatformCookieManager extends PlatformCookieManager
       webViewController: webViewController,
     );
     return cookies.cast<Cookie?>().firstWhere(
-      (cookie) => cookie!.name == name,
-      orElse: () => null,
-    );
+          (cookie) => cookie!.name == name,
+          orElse: () => null,
+        );
   }
 
   @override

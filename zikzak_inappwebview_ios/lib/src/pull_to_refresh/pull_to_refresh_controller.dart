@@ -38,12 +38,13 @@ class IOSPullToRefreshController extends PlatformPullToRefreshController
   IOSPullToRefreshController(
     PlatformPullToRefreshControllerCreationParams params,
   ) : super.implementation(
-        params is IOSPullToRefreshControllerCreationParams
-            ? params
-            : IOSPullToRefreshControllerCreationParams.fromPlatformPullToRefreshControllerCreationParams(
-              params,
-            ),
-      );
+          params is IOSPullToRefreshControllerCreationParams
+              ? params
+              : IOSPullToRefreshControllerCreationParams
+                  .fromPlatformPullToRefreshControllerCreationParams(
+                  params,
+                ),
+        );
 
   _debugLog(String method, dynamic args) {
     debugLog(

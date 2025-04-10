@@ -32,18 +32,16 @@ class InAppWebViewWebElement implements Disposable {
   }) {
     this._viewId = viewId;
     this._messenger = messenger;
-    iframeContainer =
-        DivElement()
-          ..id = 'zikzak_inappwebview-$_viewId-container'
-          ..style.height = '100%'
-          ..style.width = '100%'
-          ..style.border = 'none';
-    iframe =
-        IFrameElement()
-          ..id = 'zikzak_inappwebview-$_viewId'
-          ..style.height = '100%'
-          ..style.width = '100%'
-          ..style.border = 'none';
+    iframeContainer = DivElement()
+      ..id = 'zikzak_inappwebview-$_viewId-container'
+      ..style.height = '100%'
+      ..style.width = '100%'
+      ..style.border = 'none';
+    iframe = IFrameElement()
+      ..id = 'zikzak_inappwebview-$_viewId'
+      ..style.height = '100%'
+      ..style.width = '100%'
+      ..style.border = 'none';
     iframeContainer.append(iframe);
 
     _channel = MethodChannel(
@@ -80,10 +78,9 @@ class InAppWebViewWebElement implements Disposable {
       case "getIFrameId":
         return getIFrameId();
       case "loadUrl":
-        URLRequest urlRequest =
-            URLRequest.fromMap(
-              call.arguments["urlRequest"].cast<String, dynamic>(),
-            )!;
+        URLRequest urlRequest = URLRequest.fromMap(
+          call.arguments["urlRequest"].cast<String, dynamic>(),
+        )!;
         await loadUrl(urlRequest: urlRequest);
         break;
       case "loadData":
@@ -119,8 +116,7 @@ class InAppWebViewWebElement implements Disposable {
       case "getSettings":
         return await getSettings();
       case "setSettings":
-        InAppWebViewSettings newSettings =
-            InAppWebViewSettings.fromMap(
+        InAppWebViewSettings newSettings = InAppWebViewSettings.fromMap(
               call.arguments["settings"].cast<String, dynamic>(),
             ) ??
             InAppWebViewSettings();
@@ -241,8 +237,7 @@ class InAppWebViewWebElement implements Disposable {
       iframe.allow = settings!.iframeAllow ?? iframe.allow;
       iframe.allowFullscreen =
           settings!.iframeAllowFullscreen ?? iframe.allowFullscreen;
-      iframe.referrerPolicy =
-          settings!.iframeReferrerPolicy?.toNativeValue() ??
+      iframe.referrerPolicy = settings!.iframeReferrerPolicy?.toNativeValue() ??
           iframe.referrerPolicy;
       iframe.name = settings!.iframeName ?? iframe.name;
       iframe.csp = settings!.iframeCsp ?? iframe.csp;

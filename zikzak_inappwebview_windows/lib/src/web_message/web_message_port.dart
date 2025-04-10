@@ -36,13 +36,14 @@ class WindowsWebMessagePort extends PlatformWebMessagePort {
 
   /// Constructs a [WindowsWebMessagePort].
   WindowsWebMessagePort(PlatformWebMessagePortCreationParams params)
-    : super.implementation(
-        params is WindowsWebMessagePortCreationParams
-            ? params
-            : WindowsWebMessagePortCreationParams.fromPlatformWebMessagePortCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WindowsWebMessagePortCreationParams
+              ? params
+              : WindowsWebMessagePortCreationParams
+                  .fromPlatformWebMessagePortCreationParams(
+                  params,
+                ),
+        );
 
   @override
   Future<void> setWebMessageCallback(WebMessageCallback? onMessage) async {

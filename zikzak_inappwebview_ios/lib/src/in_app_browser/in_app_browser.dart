@@ -55,13 +55,14 @@ class IOSInAppBrowser extends PlatformInAppBrowser with ChannelController {
 
   /// Constructs a [IOSInAppBrowser].
   IOSInAppBrowser(PlatformInAppBrowserCreationParams params)
-    : super.implementation(
-        params is IOSInAppBrowserCreationParams
-            ? params
-            : IOSInAppBrowserCreationParams.fromPlatformInAppBrowserCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is IOSInAppBrowserCreationParams
+              ? params
+              : IOSInAppBrowserCreationParams
+                  .fromPlatformInAppBrowserCreationParams(
+                  params,
+                ),
+        ) {
     _contextMenu = params.contextMenu;
   }
 
@@ -155,15 +156,14 @@ class IOSInAppBrowser extends PlatformInAppBrowser with ChannelController {
     _isOpened = true;
     _init();
 
-    var initialSettings =
-        settings?.toMap() ??
+    var initialSettings = settings?.toMap() ??
         options?.toMap() ??
         InAppBrowserClassSettings().toMap();
 
     Map<String, dynamic> pullToRefreshSettings =
         pullToRefreshController?.settings.toMap() ??
-        pullToRefreshController?.options.toMap() ??
-        PullToRefreshSettings(enabled: false).toMap();
+            pullToRefreshController?.options.toMap() ??
+            PullToRefreshSettings(enabled: false).toMap();
 
     List<Map<String, dynamic>> menuItemList = [];
     _menuItems.forEach((key, value) {

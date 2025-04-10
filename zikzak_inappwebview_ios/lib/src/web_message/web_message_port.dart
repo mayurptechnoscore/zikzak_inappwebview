@@ -36,13 +36,14 @@ class IOSWebMessagePort extends PlatformWebMessagePort {
 
   /// Constructs a [IOSWebMessagePort].
   IOSWebMessagePort(PlatformWebMessagePortCreationParams params)
-    : super.implementation(
-        params is IOSWebMessagePortCreationParams
-            ? params
-            : IOSWebMessagePortCreationParams.fromPlatformWebMessagePortCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSWebMessagePortCreationParams
+              ? params
+              : IOSWebMessagePortCreationParams
+                  .fromPlatformWebMessagePortCreationParams(
+                  params,
+                ),
+        );
 
   @override
   Future<void> setWebMessageCallback(WebMessageCallback? onMessage) async {

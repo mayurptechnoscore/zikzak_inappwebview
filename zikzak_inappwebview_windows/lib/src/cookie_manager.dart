@@ -39,13 +39,14 @@ class WindowsCookieManager extends PlatformCookieManager
     with ChannelController {
   /// Creates a new [WindowsCookieManager].
   WindowsCookieManager(PlatformCookieManagerCreationParams params)
-    : super.implementation(
-        params is WindowsCookieManagerCreationParams
-            ? params
-            : WindowsCookieManagerCreationParams.fromPlatformCookieManagerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsCookieManagerCreationParams
+              ? params
+              : WindowsCookieManagerCreationParams
+                  .fromPlatformCookieManagerCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_cookiemanager',
     );

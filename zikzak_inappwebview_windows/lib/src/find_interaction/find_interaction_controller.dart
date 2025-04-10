@@ -34,12 +34,13 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
   WindowsFindInteractionController(
     PlatformFindInteractionControllerCreationParams params,
   ) : super.implementation(
-        params is WindowsFindInteractionControllerCreationParams
-            ? params
-            : WindowsFindInteractionControllerCreationParams.fromPlatformFindInteractionControllerCreationParams(
-              params,
-            ),
-      );
+          params is WindowsFindInteractionControllerCreationParams
+              ? params
+              : WindowsFindInteractionControllerCreationParams
+                  .fromPlatformFindInteractionControllerCreationParams(
+                  params,
+                ),
+        );
 
   _debugLog(String method, dynamic args) {
     debugLog(
@@ -110,11 +111,11 @@ class WindowsFindInteractionController extends PlatformFindInteractionController
   ///{@macro zikzak_inappwebview_platform_interface.PlatformFindInteractionController.getActiveFindSession}
   Future<FindSession?> getActiveFindSession() async {
     Map<String, dynamic> args = <String, dynamic>{};
-    Map<String, dynamic>? result =
-        (await channel?.invokeMethod(
-          'getActiveFindSession',
-          args,
-        ))?.cast<String, dynamic>();
+    Map<String, dynamic>? result = (await channel?.invokeMethod(
+      'getActiveFindSession',
+      args,
+    ))
+        ?.cast<String, dynamic>();
     return FindSession.fromMap(result);
   }
 

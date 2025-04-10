@@ -33,13 +33,14 @@ class IOSWebStorageCreationParams extends PlatformWebStorageCreationParams {
 class IOSWebStorage extends PlatformWebStorage {
   /// Constructs a [IOSWebStorage].
   IOSWebStorage(PlatformWebStorageCreationParams params)
-    : super.implementation(
-        params is IOSWebStorageCreationParams
-            ? params
-            : IOSWebStorageCreationParams.fromPlatformWebStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSWebStorageCreationParams
+              ? params
+              : IOSWebStorageCreationParams
+                  .fromPlatformWebStorageCreationParams(
+                  params,
+                ),
+        );
 
   @override
   PlatformLocalStorage get localStorage => params.localStorage;
@@ -136,9 +137,8 @@ abstract class IOSStorage implements PlatformStorage {
   Future<List<WebStorageItem>> getItems() async {
     var webStorageItems = <WebStorageItem>[];
 
-    List<Map<dynamic, dynamic>>? items =
-        (await controller?.evaluateJavascript(
-          source: """
+    List<Map<dynamic, dynamic>>? items = (await controller?.evaluateJavascript(
+      source: """
 (function() {
   var webStorageItems = [];
   for(var i = 0; i < window.$webStorageType.length; i++){
@@ -153,7 +153,8 @@ abstract class IOSStorage implements PlatformStorage {
   return webStorageItems;
 })();
     """,
-        ))?.cast<Map<dynamic, dynamic>>();
+    ))
+        ?.cast<Map<dynamic, dynamic>>();
 
     if (items == null) {
       return webStorageItems;
@@ -216,13 +217,14 @@ class IOSLocalStorageCreationParams extends PlatformLocalStorageCreationParams {
 class IOSLocalStorage extends PlatformLocalStorage with IOSStorage {
   /// Constructs a [IOSLocalStorage].
   IOSLocalStorage(PlatformLocalStorageCreationParams params)
-    : super.implementation(
-        params is IOSLocalStorageCreationParams
-            ? params
-            : IOSLocalStorageCreationParams.fromPlatformLocalStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSLocalStorageCreationParams
+              ? params
+              : IOSLocalStorageCreationParams
+                  .fromPlatformLocalStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory IOSLocalStorage.defaultStorage({
@@ -269,13 +271,14 @@ class IOSSessionStorageCreationParams
 class IOSSessionStorage extends PlatformSessionStorage with IOSStorage {
   /// Constructs a [IOSSessionStorage].
   IOSSessionStorage(PlatformSessionStorageCreationParams params)
-    : super.implementation(
-        params is IOSSessionStorageCreationParams
-            ? params
-            : IOSSessionStorageCreationParams.fromPlatformSessionStorageCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSSessionStorageCreationParams
+              ? params
+              : IOSSessionStorageCreationParams
+                  .fromPlatformSessionStorageCreationParams(
+                  params,
+                ),
+        );
 
   /// Default storage
   factory IOSSessionStorage.defaultStorage({

@@ -38,7 +38,7 @@ class WebPlatformInAppWebViewPlatform extends InAppWebViewPlatform {
   /// Look at using [InAppWebViewController] in `zikzak_inappwebview` instead.
   @override
   WebPlatformInAppWebViewController
-  createPlatformInAppWebViewControllerStatic() {
+      createPlatformInAppWebViewControllerStatic() {
     return WebPlatformInAppWebViewController.static();
   }
 

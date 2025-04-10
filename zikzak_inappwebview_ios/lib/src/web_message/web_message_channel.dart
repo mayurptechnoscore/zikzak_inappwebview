@@ -42,13 +42,14 @@ class IOSWebMessageChannel extends PlatformWebMessageChannel
     with ChannelController {
   /// Constructs a [IOSWebMessageChannel].
   IOSWebMessageChannel(PlatformWebMessageChannelCreationParams params)
-    : super.implementation(
-        params is IOSWebMessageChannelCreationParams
-            ? params
-            : IOSWebMessageChannelCreationParams.fromPlatformWebMessageChannelCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is IOSWebMessageChannelCreationParams
+              ? params
+              : IOSWebMessageChannelCreationParams
+                  .fromPlatformWebMessageChannelCreationParams(
+                  params,
+                ),
+        ) {
     channel = MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_web_message_channel_${params.id}',
     );
@@ -95,12 +96,11 @@ class IOSWebMessageChannel extends PlatformWebMessageChannel
         int index = call.arguments["index"];
         var port = index == 0 ? _iosPort1 : _iosPort2;
         if (port.onMessage != null) {
-          WebMessage? message =
-              call.arguments["message"] != null
-                  ? WebMessage.fromMap(
-                    call.arguments["message"].cast<String, dynamic>(),
-                  )
-                  : null;
+          WebMessage? message = call.arguments["message"] != null
+              ? WebMessage.fromMap(
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
+              : null;
           port.onMessage!(message);
         }
         break;

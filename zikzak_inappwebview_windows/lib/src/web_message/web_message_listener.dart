@@ -44,13 +44,14 @@ class WindowsWebMessageListener extends PlatformWebMessageListener
     with ChannelController {
   /// Constructs a [WindowsWebMessageListener].
   WindowsWebMessageListener(PlatformWebMessageListenerCreationParams params)
-    : super.implementation(
-        params is WindowsWebMessageListenerCreationParams
-            ? params
-            : WindowsWebMessageListenerCreationParams.fromPlatformWebMessageListenerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsWebMessageListenerCreationParams
+              ? params
+              : WindowsWebMessageListenerCreationParams
+                  .fromPlatformWebMessageListenerCreationParams(
+                  params,
+                ),
+        ) {
     assert(
       !this._macosParams.allowedOriginRules.contains(""),
       "allowedOriginRules cannot contain empty strings",
@@ -81,16 +82,14 @@ class WindowsWebMessageListener extends PlatformWebMessageListener
           );
         }
         if (onPostMessage != null) {
-          WebMessage? message =
-              call.arguments["message"] != null
-                  ? WebMessage.fromMap(
-                    call.arguments["message"].cast<String, dynamic>(),
-                  )
-                  : null;
-          WebUri? sourceOrigin =
-              call.arguments["sourceOrigin"] != null
-                  ? WebUri(call.arguments["sourceOrigin"])
-                  : null;
+          WebMessage? message = call.arguments["message"] != null
+              ? WebMessage.fromMap(
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
+              : null;
+          WebUri? sourceOrigin = call.arguments["sourceOrigin"] != null
+              ? WebUri(call.arguments["sourceOrigin"])
+              : null;
           bool isMainFrame = call.arguments["isMainFrame"];
           onPostMessage!(message, sourceOrigin, isMainFrame, _replyProxy!);
         }
@@ -155,13 +154,14 @@ class MacOSJavaScriptReplyProxyCreationParams
 class MacOSJavaScriptReplyProxy extends PlatformJavaScriptReplyProxy {
   /// Constructs a [WindowsWebMessageListener].
   MacOSJavaScriptReplyProxy(PlatformJavaScriptReplyProxyCreationParams params)
-    : super.implementation(
-        params is MacOSJavaScriptReplyProxyCreationParams
-            ? params
-            : MacOSJavaScriptReplyProxyCreationParams.fromPlatformJavaScriptReplyProxyCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is MacOSJavaScriptReplyProxyCreationParams
+              ? params
+              : MacOSJavaScriptReplyProxyCreationParams
+                  .fromPlatformJavaScriptReplyProxyCreationParams(
+                  params,
+                ),
+        );
 
   WindowsWebMessageListener get _macosWebMessageListener =>
       params.webMessageListener as WindowsWebMessageListener;

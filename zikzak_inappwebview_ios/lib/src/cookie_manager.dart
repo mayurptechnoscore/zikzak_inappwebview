@@ -35,13 +35,14 @@ class IOSCookieManagerCreationParams
 class IOSCookieManager extends PlatformCookieManager with ChannelController {
   /// Creates a new [IOSCookieManager].
   IOSCookieManager(PlatformCookieManagerCreationParams params)
-    : super.implementation(
-        params is IOSCookieManagerCreationParams
-            ? params
-            : IOSCookieManagerCreationParams.fromPlatformCookieManagerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is IOSCookieManagerCreationParams
+              ? params
+              : IOSCookieManagerCreationParams
+                  .fromPlatformCookieManagerCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_cookiemanager',
     );
@@ -237,9 +238,8 @@ class IOSCookieManager extends PlatformCookieManager with ChannelController {
       if (javaScriptEnabled) {
         List<String> documentCookies =
             (await webViewController.evaluateJavascript(
-                      source: 'document.cookie',
-                    )
-                    as String)
+          source: 'document.cookie',
+        ) as String)
                 .split(';')
                 .map((documentCookie) => documentCookie.trim())
                 .toList();
@@ -267,9 +267,8 @@ class IOSCookieManager extends PlatformCookieManager with ChannelController {
 
     List<String> documentCookies =
         (await headlessWebView.webViewController!.evaluateJavascript(
-                  source: 'document.cookie',
-                )
-                as String)
+      source: 'document.cookie',
+    ) as String)
             .split(';')
             .map((documentCookie) => documentCookie.trim())
             .toList();
@@ -302,9 +301,9 @@ class IOSCookieManager extends PlatformCookieManager with ChannelController {
         webViewController: webViewController,
       );
       return cookies.cast<Cookie?>().firstWhere(
-        (cookie) => cookie!.name == name,
-        orElse: () => null,
-      );
+            (cookie) => cookie!.name == name,
+            orElse: () => null,
+          );
     }
 
     Map<String, dynamic> args = <String, dynamic>{};
@@ -447,11 +446,11 @@ class IOSCookieManager extends PlatformCookieManager with ChannelController {
     var dateTime = DateTime.fromMillisecondsSinceEpoch(expiresDate).toUtc();
     return !kIsWeb
         ? await platformUtil.formatDate(
-          date: dateTime,
-          format: 'EEE, dd MMM yyyy hh:mm:ss z',
-          locale: 'en_US',
-          timezone: 'GMT',
-        )
+            date: dateTime,
+            format: 'EEE, dd MMM yyyy hh:mm:ss z',
+            locale: 'en_US',
+            timezone: 'GMT',
+          )
         : await platformUtil.getWebCookieExpirationDate(date: dateTime);
   }
 

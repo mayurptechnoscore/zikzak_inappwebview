@@ -33,12 +33,13 @@ class IOSHttpAuthCredentialDatabase extends PlatformHttpAuthCredentialDatabase
   IOSHttpAuthCredentialDatabase(
     PlatformHttpAuthCredentialDatabaseCreationParams params,
   ) : super.implementation(
-        params is IOSHttpAuthCredentialDatabaseCreationParams
-            ? params
-            : IOSHttpAuthCredentialDatabaseCreationParams.fromPlatformHttpAuthCredentialDatabaseCreationParams(
-              params,
-            ),
-      ) {
+          params is IOSHttpAuthCredentialDatabaseCreationParams
+              ? params
+              : IOSHttpAuthCredentialDatabaseCreationParams
+                  .fromPlatformHttpAuthCredentialDatabaseCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_credential_database',
     );
@@ -66,7 +67,7 @@ class IOSHttpAuthCredentialDatabase extends PlatformHttpAuthCredentialDatabase
 
   @override
   Future<List<URLProtectionSpaceHttpAuthCredentials>>
-  getAllAuthCredentials() async {
+      getAllAuthCredentials() async {
     Map<String, dynamic> args = <String, dynamic>{};
     List<dynamic> allCredentials =
         await channel?.invokeMethod<List>('getAllAuthCredentials', args) ?? [];

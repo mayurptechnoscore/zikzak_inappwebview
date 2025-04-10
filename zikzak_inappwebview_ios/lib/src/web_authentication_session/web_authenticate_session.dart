@@ -30,12 +30,13 @@ class IOSWebAuthenticationSession extends PlatformWebAuthenticationSession
   IOSWebAuthenticationSession(
     PlatformWebAuthenticationSessionCreationParams params,
   ) : super.implementation(
-        params is IOSWebAuthenticationSessionCreationParams
-            ? params
-            : IOSWebAuthenticationSessionCreationParams.fromPlatformWebAuthenticationSessionCreationParams(
-              params,
-            ),
-      );
+          params is IOSWebAuthenticationSessionCreationParams
+              ? params
+              : IOSWebAuthenticationSessionCreationParams
+                  .fromPlatformWebAuthenticationSessionCreationParams(
+                  params,
+                ),
+        );
 
   static final IOSWebAuthenticationSession _staticValue =
       IOSWebAuthenticationSession(IOSWebAuthenticationSessionCreationParams());

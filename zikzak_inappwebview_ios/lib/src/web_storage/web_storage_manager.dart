@@ -32,13 +32,14 @@ class IOSWebStorageManager extends PlatformWebStorageManager
     with ChannelController {
   /// Creates a new [IOSWebStorageManager].
   IOSWebStorageManager(PlatformWebStorageManagerCreationParams params)
-    : super.implementation(
-        params is IOSWebStorageManagerCreationParams
-            ? params
-            : IOSWebStorageManagerCreationParams.fromPlatformWebStorageManagerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is IOSWebStorageManagerCreationParams
+              ? params
+              : IOSWebStorageManagerCreationParams
+                  .fromPlatformWebStorageManagerCreationParams(
+                  params,
+                ),
+        ) {
     channel = const MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_webstoragemanager',
     );
@@ -75,11 +76,11 @@ class IOSWebStorageManager extends PlatformWebStorageManager
     }
     Map<String, dynamic> args = <String, dynamic>{};
     args.putIfAbsent("dataTypes", () => dataTypesList);
-    List<Map<dynamic, dynamic>> records =
-        (await channel?.invokeMethod<List>(
+    List<Map<dynamic, dynamic>> records = (await channel?.invokeMethod<List>(
           'fetchDataRecords',
           args,
-        ))?.cast<Map<dynamic, dynamic>>() ??
+        ))
+            ?.cast<Map<dynamic, dynamic>>() ??
         [];
     for (var record in records) {
       List<String> dataTypesString = record["dataTypes"].cast<String>();

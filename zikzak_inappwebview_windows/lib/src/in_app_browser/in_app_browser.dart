@@ -58,13 +58,14 @@ class WindowsInAppBrowser extends PlatformInAppBrowser with ChannelController {
 
   /// Constructs a [WindowsInAppBrowser].
   WindowsInAppBrowser(PlatformInAppBrowserCreationParams params)
-    : super.implementation(
-        params is WindowsInAppBrowserCreationParams
-            ? params
-            : WindowsInAppBrowserCreationParams.fromPlatformInAppBrowserCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsInAppBrowserCreationParams
+              ? params
+              : WindowsInAppBrowserCreationParams
+                  .fromPlatformInAppBrowserCreationParams(
+                  params,
+                ),
+        ) {
     _contextMenu = params.contextMenu;
   }
 
@@ -161,15 +162,14 @@ class WindowsInAppBrowser extends PlatformInAppBrowser with ChannelController {
     _isOpened = true;
     _init();
 
-    var initialSettings =
-        settings?.toMap() ??
+    var initialSettings = settings?.toMap() ??
         options?.toMap() ??
         InAppBrowserClassSettings().toMap();
 
     Map<String, dynamic> pullToRefreshSettings =
         pullToRefreshController?.settings.toMap() ??
-        pullToRefreshController?.options.toMap() ??
-        PullToRefreshSettings(enabled: false).toMap();
+            pullToRefreshController?.options.toMap() ??
+            PullToRefreshSettings(enabled: false).toMap();
 
     List<Map<String, dynamic>> menuItemList = [];
     _menuItems.forEach((key, value) {

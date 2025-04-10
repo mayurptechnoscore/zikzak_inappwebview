@@ -42,13 +42,14 @@ class WindowsWebMessageChannel extends PlatformWebMessageChannel
     with ChannelController {
   /// Constructs a [WindowsWebMessageChannel].
   WindowsWebMessageChannel(PlatformWebMessageChannelCreationParams params)
-    : super.implementation(
-        params is WindowsWebMessageChannelCreationParams
-            ? params
-            : WindowsWebMessageChannelCreationParams.fromPlatformWebMessageChannelCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is WindowsWebMessageChannelCreationParams
+              ? params
+              : WindowsWebMessageChannelCreationParams
+                  .fromPlatformWebMessageChannelCreationParams(
+                  params,
+                ),
+        ) {
     channel = MethodChannel(
       'wtf.zikzak/zikzak_inappwebview_web_message_channel_${params.id}',
     );
@@ -103,12 +104,11 @@ class WindowsWebMessageChannel extends PlatformWebMessageChannel
         int index = call.arguments["index"];
         var port = index == 0 ? _macosPort1 : _macosPort2;
         if (port.onMessage != null) {
-          WebMessage? message =
-              call.arguments["message"] != null
-                  ? WebMessage.fromMap(
-                    call.arguments["message"].cast<String, dynamic>(),
-                  )
-                  : null;
+          WebMessage? message = call.arguments["message"] != null
+              ? WebMessage.fromMap(
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
+              : null;
           port.onMessage!(message);
         }
         break;

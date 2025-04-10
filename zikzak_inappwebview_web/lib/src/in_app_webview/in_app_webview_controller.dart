@@ -58,12 +58,13 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
   WebPlatformInAppWebViewController(
     PlatformInAppWebViewControllerCreationParams params,
   ) : super.implementation(
-        params is WebPlatformInAppWebViewControllerCreationParams
-            ? params
-            : WebPlatformInAppWebViewControllerCreationParams.fromPlatformInAppWebViewControllerCreationParams(
-              params,
-            ),
-      ) {
+          params is WebPlatformInAppWebViewControllerCreationParams
+              ? params
+              : WebPlatformInAppWebViewControllerCreationParams
+                  .fromPlatformInAppWebViewControllerCreationParams(
+                  params,
+                ),
+        ) {
     channel = MethodChannel('wtf.zikzak/zikzak_inappwebview_$id');
     handler = handleMethod;
     initMethodCallHandler();
@@ -73,8 +74,8 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
 
   static final WebPlatformInAppWebViewController _staticValue =
       WebPlatformInAppWebViewController(
-        WebPlatformInAppWebViewControllerCreationParams(id: null),
-      );
+    WebPlatformInAppWebViewControllerCreationParams(id: null),
+  );
 
   factory WebPlatformInAppWebViewController.static() {
     return _staticValue;
@@ -326,8 +327,7 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
 
     InAppWebViewSettings? settings = await getSettings();
     if (settings != null && settings.javaScriptEnabled == true) {
-      List<Map<dynamic, dynamic>> links =
-          (await evaluateJavascript(
+      List<Map<dynamic, dynamic>> links = (await evaluateJavascript(
             source: """
 (function() {
   var linkNodes = document.head.getElementsByTagName("link");
@@ -355,7 +355,8 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
   return links;
 })();
 """,
-          ))?.cast<Map<dynamic, dynamic>>() ??
+          ))
+              ?.cast<Map<dynamic, dynamic>>() ??
           [];
       for (var link in links) {
         if (link["rel"] == "manifest") {
@@ -364,8 +365,7 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
             if (manifestUrl.startsWith("/")) {
               manifestUrl = manifestUrl.substring(1);
             }
-            manifestUrl =
-                ((assetPathBase == null)
+            manifestUrl = ((assetPathBase == null)
                     ? webviewUrl.scheme + "://" + webviewUrl.host + "/"
                     : assetPathBase) +
                 manifestUrl;
@@ -407,20 +407,18 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
       if (urlIcon.startsWith("/")) {
         urlIcon = urlIcon.substring(1);
       }
-      urlIcon =
-          ((assetPathBase == null)
+      urlIcon = ((assetPathBase == null)
               ? url.scheme + "://" + url.host + "/"
               : assetPathBase) +
           urlIcon;
     }
     if (isManifest) {
-      rel =
-          (sizes != null)
-              ? urlSplit[urlSplit.length - 1]
-                  .replaceFirst("-" + sizes, "")
-                  .split(" ")[0]
-                  .split(".")[0]
-              : null;
+      rel = (sizes != null)
+          ? urlSplit[urlSplit.length - 1]
+              .replaceFirst("-" + sizes, "")
+              .split(" ")[0]
+              .split(".")[0]
+          : null;
     }
     if (sizes != null && sizes.isNotEmpty && sizes != "any") {
       List<String> sizesSplit = sizes.split(" ");
@@ -782,9 +780,8 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
   Future<List<MetaTag>> getMetaTags() async {
     List<MetaTag> metaTags = [];
 
-    List<Map<dynamic, dynamic>>? metaTagList =
-        (await evaluateJavascript(
-          source: """
+    List<Map<dynamic, dynamic>>? metaTagList = (await evaluateJavascript(
+      source: """
 (function() {
   var metaTags = [];
   var metaTagNodes = document.head.getElementsByTagName('meta');
@@ -819,7 +816,8 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
   return metaTags;
 })();
     """,
-        ))?.cast<Map<dynamic, dynamic>>();
+    ))
+        ?.cast<Map<dynamic, dynamic>>();
 
     if (metaTagList == null) {
       return metaTags;
@@ -880,10 +878,9 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
 
     var colorValue = metaTagThemeColor.content;
 
-    themeColor =
-        colorValue != null
-            ? UtilColor.fromStringRepresentation(colorValue)
-            : null;
+    themeColor = colorValue != null
+        ? UtilColor.fromStringRepresentation(colorValue)
+        : null;
 
     return themeColor;
   }
@@ -922,13 +919,13 @@ class WebPlatformInAppWebViewController extends PlatformInAppWebViewController
 
   @override
   Future<String> get tRexRunnerHtml async => await rootBundle.loadString(
-    'packages/zikzak_inappwebview/assets/t_rex_runner/t-rex.html',
-  );
+        'packages/zikzak_inappwebview/assets/t_rex_runner/t-rex.html',
+      );
 
   @override
   Future<String> get tRexRunnerCss async => await rootBundle.loadString(
-    'packages/zikzak_inappwebview/assets/t_rex_runner/t-rex.css',
-  );
+        'packages/zikzak_inappwebview/assets/t_rex_runner/t-rex.css',
+      );
 
   @override
   Future<String?> getIFrameId() async {

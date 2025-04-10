@@ -36,13 +36,14 @@ class WindowsWebViewEnvironment extends PlatformWebViewEnvironment
   final String id = IdGenerator.generate();
 
   WindowsWebViewEnvironment(PlatformWebViewEnvironmentCreationParams params)
-    : super.implementation(
-        params is WindowsWebViewEnvironmentCreationParams
-            ? params
-            : WindowsWebViewEnvironmentCreationParams.fromPlatformWebViewEnvironmentCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is WindowsWebViewEnvironmentCreationParams
+              ? params
+              : WindowsWebViewEnvironmentCreationParams
+                  .fromPlatformWebViewEnvironmentCreationParams(
+                  params,
+                ),
+        );
 
   static final WindowsWebViewEnvironment _staticValue =
       WindowsWebViewEnvironment(WindowsWebViewEnvironmentCreationParams());

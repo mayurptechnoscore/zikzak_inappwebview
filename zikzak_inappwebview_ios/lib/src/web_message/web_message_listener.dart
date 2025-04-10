@@ -44,13 +44,14 @@ class IOSWebMessageListener extends PlatformWebMessageListener
     with ChannelController {
   /// Constructs a [IOSWebMessageListener].
   IOSWebMessageListener(PlatformWebMessageListenerCreationParams params)
-    : super.implementation(
-        params is IOSWebMessageListenerCreationParams
-            ? params
-            : IOSWebMessageListenerCreationParams.fromPlatformWebMessageListenerCreationParams(
-              params,
-            ),
-      ) {
+      : super.implementation(
+          params is IOSWebMessageListenerCreationParams
+              ? params
+              : IOSWebMessageListenerCreationParams
+                  .fromPlatformWebMessageListenerCreationParams(
+                  params,
+                ),
+        ) {
     assert(
       !this._iosParams.allowedOriginRules.contains(""),
       "allowedOriginRules cannot contain empty strings",
@@ -81,16 +82,14 @@ class IOSWebMessageListener extends PlatformWebMessageListener
           );
         }
         if (onPostMessage != null) {
-          WebMessage? message =
-              call.arguments["message"] != null
-                  ? WebMessage.fromMap(
-                    call.arguments["message"].cast<String, dynamic>(),
-                  )
-                  : null;
-          WebUri? sourceOrigin =
-              call.arguments["sourceOrigin"] != null
-                  ? WebUri(call.arguments["sourceOrigin"])
-                  : null;
+          WebMessage? message = call.arguments["message"] != null
+              ? WebMessage.fromMap(
+                  call.arguments["message"].cast<String, dynamic>(),
+                )
+              : null;
+          WebUri? sourceOrigin = call.arguments["sourceOrigin"] != null
+              ? WebUri(call.arguments["sourceOrigin"])
+              : null;
           bool isMainFrame = call.arguments["isMainFrame"];
           onPostMessage!(message, sourceOrigin, isMainFrame, _replyProxy!);
         }
@@ -155,13 +154,14 @@ class IOSJavaScriptReplyProxyCreationParams
 class IOSJavaScriptReplyProxy extends PlatformJavaScriptReplyProxy {
   /// Constructs a [IOSWebMessageListener].
   IOSJavaScriptReplyProxy(PlatformJavaScriptReplyProxyCreationParams params)
-    : super.implementation(
-        params is IOSJavaScriptReplyProxyCreationParams
-            ? params
-            : IOSJavaScriptReplyProxyCreationParams.fromPlatformJavaScriptReplyProxyCreationParams(
-              params,
-            ),
-      );
+      : super.implementation(
+          params is IOSJavaScriptReplyProxyCreationParams
+              ? params
+              : IOSJavaScriptReplyProxyCreationParams
+                  .fromPlatformJavaScriptReplyProxyCreationParams(
+                  params,
+                ),
+        );
 
   IOSWebMessageListener get _iosWebMessageListener =>
       params.webMessageListener as IOSWebMessageListener;
