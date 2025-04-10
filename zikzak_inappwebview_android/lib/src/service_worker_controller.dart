@@ -20,7 +20,8 @@ class AndroidServiceWorkerControllerCreationParams
 
   /// Creates a [AndroidServiceWorkerControllerCreationParams] instance based on [PlatformServiceWorkerControllerCreationParams].
   factory AndroidServiceWorkerControllerCreationParams.fromPlatformServiceWorkerControllerCreationParams(
-      PlatformServiceWorkerControllerCreationParams params) {
+    PlatformServiceWorkerControllerCreationParams params,
+  ) {
     return AndroidServiceWorkerControllerCreationParams(params);
   }
 }
@@ -30,15 +31,17 @@ class AndroidServiceWorkerController extends PlatformServiceWorkerController
     with ChannelController {
   /// Creates a new [AndroidServiceWorkerController].
   AndroidServiceWorkerController(
-      PlatformServiceWorkerControllerCreationParams params)
-      : super.implementation(
-          params is AndroidServiceWorkerControllerCreationParams
-              ? params
-              : AndroidServiceWorkerControllerCreationParams
-                  .fromPlatformServiceWorkerControllerCreationParams(params),
-        ) {
+    PlatformServiceWorkerControllerCreationParams params,
+  ) : super.implementation(
+        params is AndroidServiceWorkerControllerCreationParams
+            ? params
+            : AndroidServiceWorkerControllerCreationParams.fromPlatformServiceWorkerControllerCreationParams(
+              params,
+            ),
+      ) {
     channel = const MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_serviceworkercontroller');
+      'wtf.zikzak/zikzak_inappwebview_serviceworkercontroller',
+    );
     handler = handleMethod;
     initMethodCallHandler();
   }
@@ -56,8 +59,10 @@ class AndroidServiceWorkerController extends PlatformServiceWorkerController
 
   static AndroidServiceWorkerController _init() {
     _instance = AndroidServiceWorkerController(
-        AndroidServiceWorkerControllerCreationParams(
-            const PlatformServiceWorkerControllerCreationParams()));
+      AndroidServiceWorkerControllerCreationParams(
+        const PlatformServiceWorkerControllerCreationParams(),
+      ),
+    );
     return _instance!;
   }
 
@@ -83,8 +88,9 @@ class AndroidServiceWorkerController extends PlatformServiceWorkerController
               call.arguments.cast<String, dynamic>();
           WebResourceRequest request = WebResourceRequest.fromMap(arguments)!;
 
-          return (await serviceWorkerClient!.shouldInterceptRequest!(request))
-              ?.toMap();
+          return (await serviceWorkerClient!.shouldInterceptRequest!(
+            request,
+          ))?.toMap();
         }
         break;
       default:
@@ -119,7 +125,8 @@ class AndroidServiceWorkerController extends PlatformServiceWorkerController
   Future<CacheMode?> getCacheMode() async {
     Map<String, dynamic> args = <String, dynamic>{};
     return CacheMode.fromNativeValue(
-        await channel?.invokeMethod<int?>('getCacheMode', args));
+      await channel?.invokeMethod<int?>('getCacheMode', args),
+    );
   }
 
   @override

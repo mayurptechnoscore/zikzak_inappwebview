@@ -216,7 +216,8 @@ class MacOSInAppWebViewPlatform extends InAppWebViewPlatform {
   /// Look at using [WebStorageManager] in `zikzak_inappwebview` instead.
   @override
   MacOSWebStorageManager createPlatformWebStorageManager(
-      PlatformWebStorageManagerCreationParams params) {
+    PlatformWebStorageManagerCreationParams params,
+  ) {
     return MacOSWebStorageManager(params);
   }
 
@@ -226,7 +227,8 @@ class MacOSInAppWebViewPlatform extends InAppWebViewPlatform {
   /// Look at using [WebAuthenticationSession] in `zikzak_inappwebview` instead.
   @override
   MacOSWebAuthenticationSession createPlatformWebAuthenticationSession(
-      PlatformWebAuthenticationSessionCreationParams params) {
+    PlatformWebAuthenticationSessionCreationParams params,
+  ) {
     return MacOSWebAuthenticationSession(params);
   }
 
