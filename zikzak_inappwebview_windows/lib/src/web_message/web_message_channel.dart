@@ -12,16 +12,23 @@ import 'web_message_port.dart';
 class WindowsWebMessageChannelCreationParams
     extends PlatformWebMessageChannelCreationParams {
   /// Creates a new [WindowsWebMessageChannelCreationParams] instance.
-  const WindowsWebMessageChannelCreationParams(
-      {required super.id, required super.port1, required super.port2});
+  const WindowsWebMessageChannelCreationParams({
+    required super.id,
+    required super.port1,
+    required super.port2,
+  });
 
   /// Creates a [WindowsWebMessageChannelCreationParams] instance based on [PlatformWebMessageChannelCreationParams].
   factory WindowsWebMessageChannelCreationParams.fromPlatformWebMessageChannelCreationParams(
-      // Recommended placeholder to prevent being broken by platform interface.
-      // ignore: avoid_unused_constructor_parameters
-      PlatformWebMessageChannelCreationParams params) {
+    // Recommended placeholder to prevent being broken by platform interface.
+    // ignore: avoid_unused_constructor_parameters
+    PlatformWebMessageChannelCreationParams params,
+  ) {
     return WindowsWebMessageChannelCreationParams(
-        id: params.id, port1: params.port1, port2: params.port2);
+      id: params.id,
+      port1: params.port1,
+      port2: params.port2,
+    );
   }
 
   @override
@@ -35,25 +42,31 @@ class WindowsWebMessageChannel extends PlatformWebMessageChannel
     with ChannelController {
   /// Constructs a [WindowsWebMessageChannel].
   WindowsWebMessageChannel(PlatformWebMessageChannelCreationParams params)
-      : super.implementation(
-          params is WindowsWebMessageChannelCreationParams
-              ? params
-              : WindowsWebMessageChannelCreationParams
-                  .fromPlatformWebMessageChannelCreationParams(params),
-        ) {
+    : super.implementation(
+        params is WindowsWebMessageChannelCreationParams
+            ? params
+            : WindowsWebMessageChannelCreationParams.fromPlatformWebMessageChannelCreationParams(
+              params,
+            ),
+      ) {
     channel = MethodChannel(
-        'wtf.zikzak/zikzak_inappwebview_web_message_channel_${params.id}');
+      'wtf.zikzak/zikzak_inappwebview_web_message_channel_${params.id}',
+    );
     handler = _handleMethod;
     initMethodCallHandler();
   }
 
   static final WindowsWebMessageChannel _staticValue = WindowsWebMessageChannel(
-      WindowsWebMessageChannelCreationParams(
-          id: '',
-          port1: WindowsWebMessagePort(
-              WindowsWebMessagePortCreationParams(index: 0)),
-          port2: WindowsWebMessagePort(
-              WindowsWebMessagePortCreationParams(index: 1))));
+    WindowsWebMessageChannelCreationParams(
+      id: '',
+      port1: WindowsWebMessagePort(
+        WindowsWebMessagePortCreationParams(index: 0),
+      ),
+      port2: WindowsWebMessagePort(
+        WindowsWebMessagePortCreationParams(index: 1),
+      ),
+    ),
+  );
 
   /// Provide static access.
   factory WindowsWebMessageChannel.static() {
@@ -69,12 +82,16 @@ class WindowsWebMessageChannel extends PlatformWebMessageChannel
       return null;
     }
     var webMessageChannel = WindowsWebMessageChannel(
-        WindowsWebMessageChannelCreationParams(
-            id: map["id"],
-            port1: WindowsWebMessagePort(
-                WindowsWebMessagePortCreationParams(index: 0)),
-            port2: WindowsWebMessagePort(
-                WindowsWebMessagePortCreationParams(index: 1))));
+      WindowsWebMessageChannelCreationParams(
+        id: map["id"],
+        port1: WindowsWebMessagePort(
+          WindowsWebMessagePortCreationParams(index: 0),
+        ),
+        port2: WindowsWebMessagePort(
+          WindowsWebMessagePortCreationParams(index: 1),
+        ),
+      ),
+    );
     webMessageChannel._macosPort1.webMessageChannel = webMessageChannel;
     webMessageChannel._macosPort2.webMessageChannel = webMessageChannel;
     return webMessageChannel;
@@ -86,10 +103,12 @@ class WindowsWebMessageChannel extends PlatformWebMessageChannel
         int index = call.arguments["index"];
         var port = index == 0 ? _macosPort1 : _macosPort2;
         if (port.onMessage != null) {
-          WebMessage? message = call.arguments["message"] != null
-              ? WebMessage.fromMap(
-                  call.arguments["message"].cast<String, dynamic>())
-              : null;
+          WebMessage? message =
+              call.arguments["message"] != null
+                  ? WebMessage.fromMap(
+                    call.arguments["message"].cast<String, dynamic>(),
+                  )
+                  : null;
           port.onMessage!(message);
         }
         break;

@@ -20,8 +20,9 @@ class HeadlessInAppWebViewManager {
       const StandardMethodCodec(),
       _messenger,
     );
-    HeadlessInAppWebViewManager._sharedChannel
-        .setMethodCallHandler((call) async {
+    HeadlessInAppWebViewManager._sharedChannel.setMethodCallHandler((
+      call,
+    ) async {
       try {
         return await handleMethod(call);
       } on Error catch (e) {
@@ -48,7 +49,10 @@ class HeadlessInAppWebViewManager {
   void run(String id, Map<String, dynamic> params) {
     var webView = InAppWebViewWebElement(viewId: id, messenger: _messenger);
     var headlessWebView = HeadlessInAppWebViewWebElement(
-        id: id, messenger: _messenger, webView: webView);
+      id: id,
+      messenger: _messenger,
+      webView: webView,
+    );
     WebPlatformManager.webViews.putIfAbsent(id, () => webView);
     HeadlessInAppWebViewManager.webViews.putIfAbsent(id, () => headlessWebView);
     prepare(webView, params);
@@ -73,10 +77,12 @@ class HeadlessInAppWebViewManager {
       webView.initialSettings = InAppWebViewSettings.fromMap(initialSettings);
     }
     webView.initialUrlRequest = URLRequest.fromMap(
-        params["initialUrlRequest"]?.cast<String, dynamic>());
+      params["initialUrlRequest"]?.cast<String, dynamic>(),
+    );
     webView.initialFile = params["initialFile"];
     webView.initialData = InAppWebViewInitialData.fromMap(
-        params["initialData"]?.cast<String, dynamic>());
+      params["initialData"]?.cast<String, dynamic>(),
+    );
     document.body?.append(webView.iframeContainer);
     webView.prepare();
   }

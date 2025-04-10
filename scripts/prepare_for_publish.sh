@@ -206,6 +206,59 @@ for pkg in "${PACKAGES[@]}"; do
     fi
 done
 
+# Function to check if a package version is already published on pub.dev
+check_package_on_pubdev() {
+    local package_name=$1
+    local version=$2
+    
+    echo -e "${YELLOW}Checking if $package_name version $version is already on pub.dev...${NC}"
+    
+    # Use curl to query the pub.dev API
+    local response=$(curl -s "https://pub.dev/api/packages/$package_name")
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" "https://pub.dev/api/packages/$package_name")
+    
+    # Check if the package exists
+    if [ "$http_code" != "200" ]; then
+        echo -e "${BLUE}Package $package_name not found on pub.dev. Will be published for the first time.${NC}"
+        return 1
+    fi
+    
+    # Check if the version exists in the package versions
+    if echo "$response" | grep -q "\"version\":\"$version\""; then
+        echo -e "${RED}Version $version of $package_name is already published on pub.dev!${NC}"
+        return 0
+    else
+        echo -e "${GREEN}Version $version of $package_name is not yet published. Ready to publish.${NC}"
+        return 1
+    fi
+}
+
+# Check all packages on pub.dev and display a summary
+echo -e "${BLUE}\n=== Checking packages on pub.dev ===${NC}"
+declare -A package_status
+
+for pkg in "${PACKAGES[@]}"; do
+    # Extract package name from directory
+    pkg_name=$(basename "$pkg")
+    
+    if check_package_on_pubdev "$pkg_name" "$VERSION"; then
+        package_status["$pkg_name"]="Already published"
+    else
+        package_status["$pkg_name"]="Not published (ready to publish)"
+    fi
+done
+
+# Display publication status summary
+echo -e "${BLUE}\n=== Publication Status Summary ===${NC}"
+for pkg_name in "${!package_status[@]}"; do
+    status="${package_status[$pkg_name]}"
+    if [[ "$status" == "Already published" ]]; then
+        echo -e "${pkg_name}: ${RED}$status${NC}"
+    else
+        echo -e "${pkg_name}: ${GREEN}$status${NC}"
+    fi
+done
+
 echo -e "${GREEN}All packages updated to version $VERSION with versioned dependencies${NC}"
 echo -e "${YELLOW}Next steps:${NC}"
 echo -e "1. Review the changes with 'git diff'"

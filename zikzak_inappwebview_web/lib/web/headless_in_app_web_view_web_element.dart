@@ -11,10 +11,11 @@ class HeadlessInAppWebViewWebElement extends ChannelController {
   late BinaryMessenger _messenger;
   InAppWebViewWebElement? webView;
 
-  HeadlessInAppWebViewWebElement(
-      {required this.id,
-      required BinaryMessenger messenger,
-      required this.webView}) {
+  HeadlessInAppWebViewWebElement({
+    required this.id,
+    required BinaryMessenger messenger,
+    required this.webView,
+  }) {
     this._messenger = messenger;
 
     channel = MethodChannel(

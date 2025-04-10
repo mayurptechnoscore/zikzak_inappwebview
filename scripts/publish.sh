@@ -23,6 +23,83 @@ PACKAGES=(
     "zikzak_inappwebview"
 )
 
+# Function to check if a package version is already published on pub.dev
+check_package_on_pubdev() {
+    local package_name=$1
+    local version=$2
+    
+    echo -e "${BLUE}Checking if $package_name version $version is available on pub.dev...${NC}"
+    
+    # Use curl to query the pub.dev API
+    local response=$(curl -s "https://pub.dev/api/packages/$package_name")
+    local http_code=$(curl -s -o /dev/null -w "%{http_code}" "https://pub.dev/api/packages/$package_name")
+    
+    # Check if the package exists
+    if [ "$http_code" != "200" ]; then
+        echo -e "${YELLOW}Package $package_name not found on pub.dev. Will be published for the first time.${NC}"
+        return 1
+    fi
+    
+    # Check if the version exists in the package versions
+    if echo "$response" | grep -q "\"version\":\"$version\""; then
+        echo -e "${GREEN}Version $version of $package_name is already published on pub.dev!${NC}"
+        return 0
+    else
+        echo -e "${YELLOW}Version $version of $package_name is not yet published. Ready to publish.${NC}"
+        return 1
+    fi
+}
+
+# Function to check if all dependencies of a package are available on pub.dev
+check_dependencies() {
+    local package_dir="$1"
+    local max_retries=5
+    local retry_interval=30
+    
+    # Extract package version from pubspec.yaml
+    local version=$(grep "^version:" "$PROJECT_DIR/$package_dir/pubspec.yaml" | sed 's/version: //' | tr -d '[:space:]')
+    
+    # Find all package dependencies that match our packages
+    local dependencies=$(grep -E "zikzak_inappwebview_" "$PROJECT_DIR/$package_dir/pubspec.yaml" | grep -v "path:" | sed 's/^[ \t]*//;s/[ \t]*$//' | grep -o "zikzak_inappwebview_[a-z_]*")
+    
+    if [ -z "$dependencies" ]; then
+        echo -e "${BLUE}No internal dependencies found for $package_dir.${NC}"
+        return 0
+    fi
+    
+    echo -e "${BLUE}Checking dependencies for $package_dir...${NC}"
+    
+    for dep in $dependencies; do
+        echo -e "${YELLOW}Checking dependency: $dep${NC}"
+        
+        # Skip if dependency is the package itself
+        if [ "$dep" = "$package_dir" ]; then
+            continue
+        fi
+        
+        # Try up to max_retries times with delay
+        local retry_count=0
+        while [ $retry_count -lt $max_retries ]; do
+            if check_package_on_pubdev "$dep" "$version"; then
+                break
+            else
+                retry_count=$((retry_count + 1))
+                if [ $retry_count -lt $max_retries ]; then
+                    echo -e "${YELLOW}Dependency $dep not available yet. Waiting ${retry_interval}s before retry ($retry_count/$max_retries)...${NC}"
+                    sleep $retry_interval
+                else
+                    echo -e "${RED}Dependency $dep version $version is required but not available on pub.dev after $max_retries retries.${NC}"
+                    echo -e "${RED}Make sure it has been published before proceeding.${NC}"
+                    return 1
+                fi
+            fi
+        done
+    done
+    
+    echo -e "${GREEN}All dependencies for $package_dir are available on pub.dev!${NC}"
+    return 0
+}
+
 # Function to publish a package
 publish_package() {
     local package_dir="$1"
@@ -30,6 +107,21 @@ publish_package() {
     echo -e "${BLUE}======================================${NC}"
     echo -e "${YELLOW}Publishing package: ${GREEN}$package_dir${NC}"
     echo -e "${BLUE}======================================${NC}"
+    
+    # Extract package version
+    local version=$(grep "^version:" "$PROJECT_DIR/$package_dir/pubspec.yaml" | sed 's/version: //' | tr -d '[:space:]')
+    
+    # Check if package is already published
+    if check_package_on_pubdev "$package_dir" "$version"; then
+        echo -e "${GREEN}Skipping $package_dir version $version (already published)${NC}"
+        return 0
+    fi
+    
+    # Check if all dependencies are available on pub.dev
+    if ! check_dependencies "$package_dir"; then
+        echo -e "${RED}Cannot publish $package_dir yet due to missing dependencies.${NC}"
+        return 1
+    fi
     
     # Navigate to the package directory
     cd "$PROJECT_DIR/$package_dir"
@@ -54,9 +146,6 @@ publish_package() {
         echo -e "${BLUE}Publishing...${NC}"
         flutter pub publish -f
         echo -e "${GREEN}Package $package_dir published successfully!${NC}"
-        # Wait a moment for pub.dev to process
-        echo -e "${BLUE}Waiting for pub.dev to process the package...${NC}"
-        sleep 60
     else
         echo -e "${RED}Skipping $package_dir...${NC}"
         return 1
