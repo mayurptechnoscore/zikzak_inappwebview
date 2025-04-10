@@ -18,11 +18,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  zikzak_inappwebview_platform_interface: ^1.1.0
-  zikzak_inappwebview_android: ^1.1.0
-  zikzak_inappwebview_ios: ^1.1.0
-  zikzak_inappwebview_macos: ^1.1.0
-  zikzak_inappwebview_web: ^1.1.0
+  zikzak_inappwebview_platform_interface:
+    path: ../zikzak_inappwebview_platform_interface
+  zikzak_inappwebview_android:
+    path: ../zikzak_inappwebview_android
+  zikzak_inappwebview_ios:
+    path: ../zikzak_inappwebview_ios
+  zikzak_inappwebview_macos:
+    path: ../zikzak_inappwebview_macos
+  zikzak_inappwebview_web:
+    path: ../zikzak_inappwebview_web
 
 dev_dependencies:
   flutter_test:
@@ -34,10 +39,6 @@ dev_dependencies:
   generators:
     path: ../dev_packages/generators
 
-# For information on the generic Dart part of this file, see the
-# following page: https://www.dartlang.org/tools/pub/pubspec
-
-# The following section is specific to Flutter.
 flutter:
   plugin:
     platforms:
